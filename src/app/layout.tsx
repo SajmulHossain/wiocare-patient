@@ -15,10 +15,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: {
     template: "%s | Wio Care - Ai HealthCare System",
-    default: "Wio Care - Ai HealthCare System",
+    default: "Wio Care | Ai HealthCare System",
   },
   description:
-    "Wio Care is Artificial Intellegence based healthcare management complete ecosystem for Bangladesh in first time.",
+    "Wio Care is Artificial Intelligence based healthcare management complete ecosystem for Bangladesh in first time.",
   icons: "logos/wiocare-fav.png",
 };
 
