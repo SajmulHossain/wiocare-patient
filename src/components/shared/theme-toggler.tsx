@@ -20,7 +20,7 @@ const ThemeToggler = () => {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="size-6"
+        className="size-5"
         animate={{
           rotate: theme === "dark" ? 40 : 0,
         }}
