@@ -40,7 +40,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               36 July 2024
             </Csp>
             <Csp>
-              <Image src={logo} alt="Logo" width={25} height={25} className="w-auto h-auto" />
+              <Image
+                src={logo}
+                alt="Logo"
+                width={25}
+                height={25}
+                className="w-auto h-auto"
+              />
               2006 0124654
             </Csp>
             <Csp>
@@ -68,7 +74,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </div>
           </div>
         </header>
-        <main>{children}</main>
+        <main className="h-full p-2">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
