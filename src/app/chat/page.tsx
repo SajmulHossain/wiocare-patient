@@ -1,7 +1,11 @@
 import { NewChatView } from "./_section/new-chat-view";
 
 const NewChatPage = () => {
-  return <NewChatView />;
+  return (
+    <section className="flex flex-col h-full w-full">
+      <NewChatView />
+    </section>
+  );
 };
 
 export default NewChatPage;
