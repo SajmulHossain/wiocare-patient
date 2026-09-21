@@ -40,7 +40,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               36 July 2024
             </Csp>
             <Csp>
-              <Image src={logo} alt="Logo" width={25} height={25} />
+              <Image src={logo} alt="Logo" width={25} height={25} className="w-auto h-auto" />
               2006 0124654
             </Csp>
             <Csp>

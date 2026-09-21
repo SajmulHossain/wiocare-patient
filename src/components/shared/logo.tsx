@@ -11,7 +11,7 @@ function Logo({ show = false }: { show?: boolean }) {
         width={200}
         height={200}
         priority
-        className="object-cover h-10 w-auto"
+        className="object-cover h-10 w-10"
       />
       {show && (
         <h3 className="ml-2 text-xl font-semibold text-foreground">Wio Care</h3>
