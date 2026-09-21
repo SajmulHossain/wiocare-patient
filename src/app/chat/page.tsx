@@ -1,5 +1,7 @@
-const Page = () => {
-  return <div>WioChatPage</div>;
+import { NewChatView } from "./_section/new-chat-view";
+
+const NewChatPage = () => {
+  return <NewChatView />;
 };
 
-export default Page;
+export default NewChatPage;
