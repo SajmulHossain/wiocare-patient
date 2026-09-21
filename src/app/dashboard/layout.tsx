@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import type { ReactNode } from "react";
 import logo from "@/assets/images/logos/wiocare-fav.png";
+import WioChatPopup from "@/components/shared/wio-chat-popup";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -76,6 +77,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </header>
         <main className="h-full p-2">{children}</main>
       </SidebarInset>
+      <WioChatPopup />
     </SidebarProvider>
   );
 }
