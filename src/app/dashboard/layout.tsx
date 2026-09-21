@@ -9,8 +9,15 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { getNameInitialCharacter } from "@/lib/getNameInitChar";
-import { RiNotification2Fill } from "@remixicon/react";
+import {
+  RiCalendar2Fill,
+  RiKnifeBloodFill,
+  RiNotification2Fill,
+  RiPhoneLine,
+} from "@remixicon/react";
+import Image from "next/image";
 import type { ReactNode } from "react";
+import logo from "@/assets/images/logos/wiocare-fav.png";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -24,6 +31,27 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               orientation="vertical"
               className="mr-2 data-vertical:h-4 data-vertical:self-auto"
             />
+          </div>
+
+          <div className="flex items-center grow gap-6 bg-primary/30 px-2 py-1 rounded-md w-fit">
+            <span className="font-medium text-sm">Sajmul Hossain</span>
+            <Csp>
+              <RiCalendar2Fill className="h-5 w-5" />
+              36 July 2024
+            </Csp>
+            <Csp>
+              <Image src={logo} alt="Logo" width={25} height={25} />
+              2006 0124654
+            </Csp>
+            <Csp>
+              <RiKnifeBloodFill className="h-5 w-5" />
+              A+
+            </Csp>
+
+            <Csp>
+              <RiPhoneLine className="h-5 w-5" />
+              01817730511
+            </Csp>
           </div>
 
           <div className="flex items-center gap-4 px-4">
@@ -45,3 +73,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
     </SidebarProvider>
   );
 }
+
+const Csp = ({ children }: { children: ReactNode }) => {
+  return <span className="flex items-center gap-1">{children}</span>;
+};
