@@ -1,11 +1,18 @@
-import React from "react";
-import { LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import {
+  Empty,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+  EmptyMedia,
+  EmptyHeader,
+} from "@/components/ui/empty";
+import type { RemixiconComponentType } from "@remixicon/react";
 
 interface EmptyStateProps {
-  icon?: LucideIcon;
+  icon?: RemixiconComponentType | React.ComponentType<{ className?: string }>;
   title: string;
   description?: string;
   actionLabel?: string;
@@ -20,30 +27,35 @@ const EmptyState: React.FC<EmptyStateProps> = ({
   description,
   actionLabel,
   actionHref,
-  className = "",
+  className,
   type = "default",
 }) => {
   return (
-    <div
-      className={`rounded-xl border border-dashed p-8 text-center ${className}`}
-    >
-      {Icon && (
-        <Icon
-          className={cn("mx-auto mb-3 h-10 w-10", {
-            "text-red-500": type === "error",
-            "text-yellow-500": type === "warning",
-            "text-green-500": type === "success",
-          })}
-        />
-      )}
-      <p className="text-lg font-semibold">{title}</p>
-      <p className="text-sm text-muted-foreground mt-1">{description}</p>
+    <Empty className={cn(className, "border border-dashed")}>
+      <EmptyHeader>
+        {Icon && (
+          <EmptyMedia>
+            <Icon
+              className={cn({
+                "text-red-500": type === "error",
+                "text-yellow-500": type === "warning",
+                "text-green-500": type === "success",
+              })}
+            />
+          </EmptyMedia>
+        )}
+        <EmptyTitle>{title}</EmptyTitle>
+      </EmptyHeader>
+      {description && <EmptyDescription>{description}</EmptyDescription>}
       {actionLabel && actionHref && (
-        <Button asChild className="mt-4">
-          <Link href={actionHref}>{actionLabel}</Link>
-        </Button>
+        <EmptyContent className="mt-4">
+          <Button asChild>
+            <Link href={actionHref}>{actionLabel}</Link>
+          </Button>
+        </EmptyContent>
       )}
-    </div>
+    </Empty>
   );
 };
+
 export default EmptyState;
