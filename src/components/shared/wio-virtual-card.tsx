@@ -97,7 +97,7 @@ const CardBack = memo(
         </div>
       </div>
 
-      <div className="relative z-10 shrink-0 rounded-xl backdrop-blur-md shadow-lg">
+      <div className="relative z-10 shrink-0 rounded-xl bg-white/20 shadow-lg">
         {/* Render the shared QR Code Component here, ensuring no internal download button */}
         <CustomQRCode
           data={`WioCare Member: ${wioId} | ${name} | ${bloodGroup}`}
@@ -128,54 +128,10 @@ export const WioVirtualCard = ({
     try {
       setIsDownloading(true);
 
-      // ──────────────────────────────────────────────────────────
-      // PRE-PROCESS: Swap <canvas> → <img> before snapshot.
-      // html-to-image clones the DOM into an SVG foreignObject.
-      // Cloned <canvas> elements lose all pixel data (empty clone).
-      // Fix: extract pixel data via toDataURL and swap in a static <img>.
-      // ──────────────────────────────────────────────────────────
-      const canvasSwaps: {
-        img: HTMLImageElement;
-        canvas: HTMLCanvasElement;
-        parent: HTMLElement;
-      }[] = [];
-      exportRef.current.querySelectorAll("canvas").forEach((canvas) => {
-        const img = document.createElement("img");
-        img.src = canvas.toDataURL("image/png");
-        img.width = canvas.width;
-        img.height = canvas.height;
-        img.style.width = canvas.style.width || `${canvas.width}px`;
-        img.style.height = canvas.style.height || `${canvas.height}px`;
-        img.style.display = canvas.style.display || "block";
-        if (canvas.parentElement) {
-          canvasSwaps.push({ img, canvas, parent: canvas.parentElement });
-          canvas.parentElement.replaceChild(img, canvas);
-        }
-      });
-
-      // Neutralise backdrop-filter (renders as black squares in SVG foreignObject)
-      const backdropRestores: { el: HTMLElement; original: string }[] = [];
-      exportRef.current
-        .querySelectorAll<HTMLElement>("*")
-        .forEach((el) => {
-          const computed = getComputedStyle(el);
-          if (computed.backdropFilter && computed.backdropFilter !== "none") {
-            backdropRestores.push({ el, original: el.style.backdropFilter });
-            el.style.backdropFilter = "none";
-          }
-        });
-
       const dataUrl = await toPng(exportRef.current, {
         quality: 1.0,
         pixelRatio: 3,
-      });
-
-      // POST-PROCESS: Restore original canvas elements + backdrop-filter
-      canvasSwaps.forEach(({ img, canvas, parent }) => {
-        parent.replaceChild(canvas, img);
-      });
-      backdropRestores.forEach(({ el, original }) => {
-        el.style.backdropFilter = original;
+        // cacheBust is intentionally omitted so it doesn't corrupt Base64 data URLs
       });
 
       const link = document.createElement("a");
