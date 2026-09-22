@@ -2,6 +2,7 @@
 
 import { memo, useRef, useState } from "react";
 import { toPng } from "html-to-image";
+import { jsPDF } from "jspdf";
 import Image from "next/image";
 import {
   RiBankCardLine,
@@ -9,6 +10,12 @@ import {
   RiLoader4Line,
 } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { CustomQRCode } from "@/components/common/custom-qr-code";
 import { toast } from "sonner";
 import wiocareVector from "@/assets/images/logos/wiocare-vector.png";
@@ -123,22 +130,50 @@ export const WioVirtualCard = ({
   const [isDownloading, setIsDownloading] = useState(false);
 
   // Download the card by rasterizing the hidden high-res DOM nodes
-  const downloadCard = async () => {
+  const downloadCard = async (format: "png" | "pdf") => {
     if (!exportRef.current) return;
     try {
       setIsDownloading(true);
 
-      const dataUrl = await toPng(exportRef.current, {
+      const node = exportRef.current;
+      const scale = 1; // 3x resolution for crystal clear text
+
+      const dataUrl = await toPng(node, {
         quality: 1.0,
-        pixelRatio: 3,
-        // cacheBust is intentionally omitted so it doesn't corrupt Base64 data URLs
+        width: node.offsetWidth * scale,
+        height: node.offsetHeight * scale,
+        style: {
+          transform: `scale(${scale})`,
+          transformOrigin: "top left",
+          width: `${node.offsetWidth}px`,
+          height: `${node.offsetHeight}px`,
+        },
       });
 
-      const link = document.createElement("a");
-      link.download = `wio-virtual-card-${name.replace(/\s+/g, "-").toLowerCase()}.png`;
-      link.href = dataUrl;
-      link.click();
-      toast.success("Virtual card downloaded successfully!");
+      if (format === "png") {
+        const link = document.createElement("a");
+        link.download = `wio-virtual-card-${name.replace(/\s+/g, "-").toLowerCase()}.png`;
+        link.href = dataUrl;
+        link.click();
+        toast.success("Virtual card downloaded as PNG!");
+      } else {
+        // Create PDF with the exact dimensions of the export container
+        const pdfWidth = exportRef.current.offsetWidth;
+        const pdfHeight = exportRef.current.offsetHeight;
+
+        const pdf = new jsPDF({
+          orientation: pdfWidth > pdfHeight ? "landscape" : "portrait",
+          unit: "px",
+          format: [pdfWidth, pdfHeight],
+        });
+
+        pdf.addImage(dataUrl, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save(
+          `wio-virtual-card-${name.replace(/\s+/g, "-").toLowerCase()}.pdf`,
+        );
+
+        toast.success("Virtual card downloaded as PDF!");
+      }
     } catch (err) {
       console.error("Failed to generate card image", err);
       toast.error("Failed to download card. Please try again.");
@@ -188,32 +223,49 @@ export const WioVirtualCard = ({
         Click card to flip
       </p>
 
-      <Button
-        onClick={downloadCard}
-        disabled={isDownloading}
-        className="w-full gap-2 rounded-full shadow-lg hover:shadow-primary/20 transition-all"
-      >
-        {isDownloading ? (
-          <RiLoader4Line className="w-5 h-5 animate-spin" />
-        ) : (
-          <RiDownloadCloud2Line className="w-5 h-5" />
-        )}
-        Download Pixel-Perfect Card
-      </Button>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            disabled={isDownloading}
+            className="w-full gap-2 rounded-full shadow-lg hover:shadow-primary/20 transition-all"
+          >
+            {isDownloading ? (
+              <RiLoader4Line className="w-5 h-5 animate-spin" />
+            ) : (
+              <RiDownloadCloud2Line className="w-5 h-5" />
+            )}
+            Download Pixel-Perfect Card
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="w-48 z-50">
+          <DropdownMenuItem
+            onClick={() => downloadCard("png")}
+            className="cursor-pointer"
+          >
+            Download as PNG
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => downloadCard("pdf")}
+            className="cursor-pointer"
+          >
+            Download as PDF
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
 
       {/* 2. HIDDEN EXPORT UI */}
       {/* We position this far off-screen. We render both the front and the back side-by-side.
-          We use exact pixel widths (1200px total, 560px per card) to ensure html-to-image renders crisply without mobile responsive stacking. */}
+          We use exact pixel widths to ensure html-to-image renders crisply without mobile responsive stacking. */}
       <div className="absolute left-[-9999px] top-[-9999px]">
         <div
           ref={exportRef}
-          className="flex flex-col gap-6 p-8 bg-transparent w-156"
+          className="flex flex-row gap-6 p-8 bg-transparent w-max"
         >
-          {/* Top: Front */}
+          {/* Left: Front */}
           <div className="w-140 h-88.25">
             <CardFront wioId={wioId} name={name} />
           </div>
-          {/* Bottom: Back */}
+          {/* Right: Back */}
           <div className="w-140 h-88.25">
             <CardBack
               wioId={wioId}

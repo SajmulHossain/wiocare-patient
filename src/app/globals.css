@@ -129,7 +129,6 @@
     cursor: pointer;
   }
   html {
-    scrollbar-gutter: stable;
     @apply font-sans;
   }
   /* img {
