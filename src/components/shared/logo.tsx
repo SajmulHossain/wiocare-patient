@@ -14,7 +14,9 @@ function Logo({ show = false }: { show?: boolean }) {
         className="object-cover h-10 w-10"
       />
       {show && (
-        <h3 className="ml-2 text-xl font-semibold text-foreground">Wio Care</h3>
+        <h3 className="ml-2 text-xl font-semibold text-foreground shimmer shimmer-color-primary shimmer-duration-3000 shimmer-angle-145">
+          Wio Care
+        </h3>
       )}
     </Link>
   );

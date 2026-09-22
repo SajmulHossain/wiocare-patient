@@ -3,12 +3,16 @@ import { getNameInitialCharacter } from "@/lib/getNameInitChar";
 import type { IUser } from "@/types";
 import { RiShieldKeyholeLine, RiCamera3Line } from "@remixicon/react";
 
+import bannerLogo from "@/assets/images/logos/wiocare-w.svg";
+import Image from "next/image";
+
 export const ProfileHeader = ({ user }: { user: IUser }) => {
   return (
     <section className="relative mb-8 w-full">
       {/* Cover Photo with gradient overlay */}
-      <div className="relative h-48 md:h-64 w-full rounded-2xl overflow-hidden bg-linear-to-r from-primary/80 via-primary-dark/80 to-primary-darker/80 shadow-inner">
+      <div className="relative h-48 p-4 md:h-64 w-full rounded-2xl overflow-hidden bg-linear-to-r from-primary/80 via-primary-dark/80 to-primary-darker/80 shadow-inner">
         <div className="absolute inset-0 bg-background/10 backdrop-blur-[2px] pointer-events-none" />
+        <Image src={bannerLogo} alt="Wiocare banner logo" />
       </div>
 
       <div className="relative -mt-16 px-4 md:px-8 flex flex-col md:flex-row items-center md:items-end gap-4 md:gap-8">

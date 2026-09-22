@@ -8,7 +8,7 @@ import {
 } from "@/components/shared/chat";
 import type { ChatMessageProps } from "@/components/shared/chat";
 import Image from "next/image";
-import wioChatLogo from "@/assets/icons/wio-chat.png";
+import wioChatLogo from "@/assets/images/icons/wio-chat.png";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
 

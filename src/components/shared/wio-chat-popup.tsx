@@ -1,5 +1,5 @@
 import Image from "next/image";
-import chatImg from "@/assets/icons/wio-chat.png";
+import chatImg from "@/assets/images/icons/wio-chat.png";
 import Link from "next/link";
 
 const WioChatPopup = () => {

@@ -3,8 +3,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ProfileContent } from "./_section/profile-content";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Profile",
+export const generateMetadata = async (): Promise<Metadata> => {
+  return {
+    title: "Sajmul Hossain",
+  };
 };
 
 export default function ProfilePage() {
