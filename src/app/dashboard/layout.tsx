@@ -1,4 +1,4 @@
-import { AppSidebar } from "@/components/dashboard-sidebar/app-sidebar";
+import { AppSidebar } from "@/components/dashboard-sidebar/dashboard-sidebar";
 import ThemeToggler from "@/components/shared/theme-toggler";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import logo from "@/assets/images/logos/wiocare-fav.png";
 import WioChatPopup from "@/components/shared/wio-chat-popup";
+import Link from "next/link";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
@@ -67,11 +68,13 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               <RiNotification2Fill className="size-5" />
             </Button>
             <div className="flex items-center gap-2">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback>
-                  {getNameInitialCharacter("Sajmul Hossain")}
-                </AvatarFallback>
-              </Avatar>
+              <Link href={"/profile"}>
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback>
+                    {getNameInitialCharacter("Sajmul Hossain")}
+                  </AvatarFallback>
+                </Avatar>
+              </Link>
             </div>
           </div>
         </header>
