@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Image from "next/image";
 import {
@@ -20,45 +20,15 @@ export interface WioVirtualCardProps {
   address: string;
 }
 
-export const WioVirtualCard = ({
-  wioId,
-  name,
-  bloodGroup,
-  address,
-}: WioVirtualCardProps) => {
-  const exportRef = useRef<HTMLDivElement>(null);
-  const [isFlipped, setIsFlipped] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
+// ──────────────────────────────────────────────────────────
+// Extracted as stable top-level components so that parent
+// re-renders (flip / download state changes) do NOT cause
+// React to unmount & remount the QR <canvas>. This was the
+// root cause of the QR code vanishing during download.
+// ──────────────────────────────────────────────────────────
 
-  // Download the card by rasterizing the hidden high-res DOM nodes
-  const downloadCard = async () => {
-    if (!exportRef.current) return;
-    try {
-      setIsDownloading(true);
-      // We use a high pixel ratio to ensure the text and QR are perfectly crisp
-      const dataUrl = await toPng(exportRef.current, {
-        quality: 1.0,
-        pixelRatio: 3,
-        // Wait for images to load, and ensure canvas size is explicitly set
-        cacheBust: true,
-      });
-
-      const link = document.createElement("a");
-      link.download = `wio-virtual-card-${name.replace(/\s+/g, "-").toLowerCase()}.png`;
-      link.href = dataUrl;
-      link.click();
-      toast.success("Virtual card downloaded successfully!");
-    } catch (err) {
-      console.error("Failed to generate card image", err);
-      toast.error("Failed to download card. Please try again.");
-    } finally {
-      setIsDownloading(false);
-    }
-  };
-
-  // Shared inner content for front and back to ensure exact visual parity
-  // between the interactive UI and the exported UI
-  const CardFront = () => (
+const CardFront = memo(
+  ({ wioId, name }: Pick<WioVirtualCardProps, "wioId" | "name">) => (
     <div className="relative w-full h-full rounded-2xl bg-linear-to-br from-[#11A89D] to-[#0A8894] p-6 text-white overflow-hidden flex flex-col shadow-xl">
       {/* Background Logo */}
       <div className="absolute inset-0 opacity-10 pointer-events-none flex items-center justify-center scale-150">
@@ -96,9 +66,12 @@ export const WioVirtualCard = ({
         <p className="text-xl font-bold tracking-wide uppercase">{name}</p>
       </div>
     </div>
-  );
+  ),
+);
+CardFront.displayName = "CardFront";
 
-  const CardBack = () => (
+const CardBack = memo(
+  ({ wioId, name, bloodGroup, address }: WioVirtualCardProps) => (
     <div className="relative w-full h-full rounded-2xl bg-linear-to-br from-[#11A89D] to-[#0A8894] p-6 text-white overflow-hidden flex shadow-xl items-center">
       {/* Background Logo */}
       <div className="absolute inset-0 opacity-10 pointer-events-none flex items-center justify-center scale-150">
@@ -135,7 +108,88 @@ export const WioVirtualCard = ({
         />
       </div>
     </div>
-  );
+  ),
+);
+CardBack.displayName = "CardBack";
+
+export const WioVirtualCard = ({
+  wioId,
+  name,
+  bloodGroup,
+  address,
+}: WioVirtualCardProps) => {
+  const exportRef = useRef<HTMLDivElement>(null);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  // Download the card by rasterizing the hidden high-res DOM nodes
+  const downloadCard = async () => {
+    if (!exportRef.current) return;
+    try {
+      setIsDownloading(true);
+
+      // ──────────────────────────────────────────────────────────
+      // PRE-PROCESS: Swap <canvas> → <img> before snapshot.
+      // html-to-image clones the DOM into an SVG foreignObject.
+      // Cloned <canvas> elements lose all pixel data (empty clone).
+      // Fix: extract pixel data via toDataURL and swap in a static <img>.
+      // ──────────────────────────────────────────────────────────
+      const canvasSwaps: {
+        img: HTMLImageElement;
+        canvas: HTMLCanvasElement;
+        parent: HTMLElement;
+      }[] = [];
+      exportRef.current.querySelectorAll("canvas").forEach((canvas) => {
+        const img = document.createElement("img");
+        img.src = canvas.toDataURL("image/png");
+        img.width = canvas.width;
+        img.height = canvas.height;
+        img.style.width = canvas.style.width || `${canvas.width}px`;
+        img.style.height = canvas.style.height || `${canvas.height}px`;
+        img.style.display = canvas.style.display || "block";
+        if (canvas.parentElement) {
+          canvasSwaps.push({ img, canvas, parent: canvas.parentElement });
+          canvas.parentElement.replaceChild(img, canvas);
+        }
+      });
+
+      // Neutralise backdrop-filter (renders as black squares in SVG foreignObject)
+      const backdropRestores: { el: HTMLElement; original: string }[] = [];
+      exportRef.current
+        .querySelectorAll<HTMLElement>("*")
+        .forEach((el) => {
+          const computed = getComputedStyle(el);
+          if (computed.backdropFilter && computed.backdropFilter !== "none") {
+            backdropRestores.push({ el, original: el.style.backdropFilter });
+            el.style.backdropFilter = "none";
+          }
+        });
+
+      const dataUrl = await toPng(exportRef.current, {
+        quality: 1.0,
+        pixelRatio: 3,
+      });
+
+      // POST-PROCESS: Restore original canvas elements + backdrop-filter
+      canvasSwaps.forEach(({ img, canvas, parent }) => {
+        parent.replaceChild(canvas, img);
+      });
+      backdropRestores.forEach(({ el, original }) => {
+        el.style.backdropFilter = original;
+      });
+
+      const link = document.createElement("a");
+      link.download = `wio-virtual-card-${name.replace(/\s+/g, "-").toLowerCase()}.png`;
+      link.href = dataUrl;
+      link.click();
+      toast.success("Virtual card downloaded successfully!");
+    } catch (err) {
+      console.error("Failed to generate card image", err);
+      toast.error("Failed to download card. Please try again.");
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-sm mx-auto">
@@ -160,11 +214,16 @@ export const WioVirtualCard = ({
         >
           {/* Front */}
           <div className="absolute inset-0 backface-hidden">
-            <CardFront />
+            <CardFront wioId={wioId} name={name} />
           </div>
           {/* Back */}
           <div className="absolute inset-0 backface-hidden rotate-y-180">
-            <CardBack />
+            <CardBack
+              wioId={wioId}
+              name={name}
+              bloodGroup={bloodGroup}
+              address={address}
+            />
           </div>
         </div>
       </button>
@@ -196,11 +255,16 @@ export const WioVirtualCard = ({
         >
           {/* Top: Front */}
           <div className="w-140 h-88.25">
-            <CardFront />
+            <CardFront wioId={wioId} name={name} />
           </div>
           {/* Bottom: Back */}
           <div className="w-140 h-88.25">
-            <CardBack />
+            <CardBack
+              wioId={wioId}
+              name={name}
+              bloodGroup={bloodGroup}
+              address={address}
+            />
           </div>
         </div>
       </div>
