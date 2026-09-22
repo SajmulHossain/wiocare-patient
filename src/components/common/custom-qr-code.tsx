@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { RiDownloadCloud2Line } from "@remixicon/react";
 import wiocareLogo from "@/assets/images/logos/wiocare-fav.png";
+import type { StaticImageData } from "next/image";
 
 export interface CustomQRCodeProps {
   /** The data to encode in the QR code (e.g., a URL) */
@@ -15,7 +16,7 @@ export interface CustomQRCodeProps {
   /** Height of the QR code in pixels. Default is 300 */
   height?: number;
   /** Optional image (e.g. a logo) to render in the center */
-  image?: string;
+  image?: string | StaticImageData;
   /** Allow users to download the generated QR code */
   allowDownload?: boolean;
 }
@@ -76,11 +77,12 @@ export const CustomQRCode = ({
   data,
   width = 300,
   height = 300,
-  image = wiocareLogo.src,
+  image = wiocareLogo,
   allowDownload = true,
 }: CustomQRCodeProps) => {
   const [qrCode, setQrCode] = useState<QRCodeStyling | null>(null);
   const ref = useRef<HTMLDivElement>(null);
+  const mainImage = typeof image === "string" ? image : image.src;
   useEffect(() => {
     // Only instantiate on client-side
     const qrCodeInstance = new QRCodeStyling({
@@ -88,10 +90,10 @@ export const CustomQRCode = ({
       width,
       height,
       data,
-      image,
+      image: mainImage,
     });
     setQrCode(qrCodeInstance);
-  }, [width, height, data, image]);
+  }, [width, height, data, mainImage]);
 
   useEffect(() => {
     if (ref.current && qrCode) {
@@ -106,9 +108,9 @@ export const CustomQRCode = ({
       width,
       height,
       data,
-      image,
+      image: mainImage,
     });
-  }, [width, height, data, image, qrCode]);
+  }, [width, height, data, mainImage, qrCode]);
 
   const onDownloadClick = () => {
     if (!qrCode) return;
@@ -134,7 +136,7 @@ export const CustomQRCode = ({
       {allowDownload && (
         <Button onClick={onDownloadClick} variant="outline" className="gap-2">
           <RiDownloadCloud2Line className="w-4 h-4" />
-          Download QR
+          <span className="shimmer shimmer-color-primary">Download QR</span>
         </Button>
       )}
     </div>
