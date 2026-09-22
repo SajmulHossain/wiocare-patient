@@ -1,6 +1,7 @@
 import EmptyState from "@/components/common/empty-state";
 import { RiNotification2Fill } from "@remixicon/react";
 import { ChatSection } from "./_section/chat-section";
+import { CustomQRCode } from "@/components/common/custom-qr-code";
 
 const DashboardPage = () => {
   return (
@@ -17,6 +18,7 @@ const DashboardPage = () => {
         />
       </div>
       <ChatSection />
+      <CustomQRCode data="ssdlafjsldafjkslafjasldkfjsldakjfsldafjksdalfjsdalfjas;ldfja;lsdfjasl;dfjskadfsladfjsldaafjalskdfjlkj" />
     </section>
   );
 };
