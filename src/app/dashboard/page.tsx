@@ -1,6 +1,7 @@
 import EmptyState from "@/components/common/empty-state";
 import { RiNotification2Fill } from "@remixicon/react";
 import { ChatSection } from "./_section/chat-section";
+import { WioVirtualCard } from "@/components/shared/wio-virtual-card";
 import { CustomQRCode } from "@/components/common/custom-qr-code";
 
 const DashboardPage = () => {
@@ -23,6 +24,14 @@ const DashboardPage = () => {
         height={200}
         width={200}
       />
+      <div className="py-8">
+        <WioVirtualCard
+          wioId="2026 000048"
+          name="Sajmul Hossain"
+          bloodGroup="A+"
+          address="Muradpur, Chattogram"
+        />
+      </div>
     </section>
   );
 };

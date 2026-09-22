@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { RiDownloadCloud2Line } from "@remixicon/react";
 import wiocareLogo from "@/assets/images/logos/wiocare-fav.png";
 import type { StaticImageData } from "next/image";
+import { cn } from "cn";
 
 export interface CustomQRCodeProps {
   /** The data to encode in the QR code (e.g., a URL) */
@@ -19,6 +20,7 @@ export interface CustomQRCodeProps {
   image?: string | StaticImageData;
   /** Allow users to download the generated QR code */
   allowDownload?: boolean;
+  className?: string;
 }
 
 // The baseline configuration defined by the user
@@ -79,6 +81,7 @@ export const CustomQRCode = ({
   height = 300,
   image = wiocareLogo,
   allowDownload = true,
+  className,
 }: CustomQRCodeProps) => {
   const [qrCode, setQrCode] = useState<QRCodeStyling | null>(null);
   const ref = useRef<HTMLDivElement>(null);
@@ -125,7 +128,10 @@ export const CustomQRCode = ({
       {/* Container for the QR Code Canvas */}
       <div
         ref={ref}
-        className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-border p-3"
+        className={cn(
+          "overflow-hidden rounded-xl bg-white shadow-sm ring-1 p-3",
+          className,
+        )}
         style={{ minWidth: width, minHeight: height }}
       >
         {!qrCode && (
