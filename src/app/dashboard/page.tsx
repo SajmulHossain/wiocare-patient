@@ -18,7 +18,11 @@ const DashboardPage = () => {
         />
       </div>
       <ChatSection />
-      <CustomQRCode data="ssdlafjsldafjkslafjasldkfjsldakjfsldafjksdalfjsdalfjas;ldfja;lsdfjasl;dfjskadfsladfjsldaafjalskdfjlkj" />
+      <CustomQRCode
+        data="www.wiocare.com, sajmul.com, sajmulhossain"
+        height={200}
+        width={200}
+      />
     </section>
   );
 };

@@ -125,7 +125,7 @@ export const CustomQRCode = ({
       {/* Container for the QR Code Canvas */}
       <div
         ref={ref}
-        className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-border p-4"
+        className="overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-border p-3"
         style={{ minWidth: width, minHeight: height }}
       >
         {!qrCode && (
