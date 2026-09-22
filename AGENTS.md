@@ -75,6 +75,7 @@ const NestedComponent = async ({ params, searchParams }) => {
 - Must avoid using `any` type.
 - Without 100% certainty, don't assert any type.
 - Ensure reusable types. Instead of making multiple types for each file, try to acquire types from zod schema or other already defined types (e.g., using `Pick`, `Omit`, `extend`, etc).
+- **Interface Naming:** Interface names should start with an 'I' prefix (e.g., `IUser`, `IPatient`, `IDoctor`).
 - Use Zod for form validation.
 - Use `react-hook-form` (built in with shadcn) and `zodResolver` for form validation.
 

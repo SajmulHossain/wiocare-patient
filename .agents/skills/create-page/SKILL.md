@@ -36,7 +36,7 @@ When asked to create a new page in the WioCare project, follow these steps:
    }
    ```
 4. **Data Fetching:** Fetch data inside the nested component. Use the `publicFetch` function if no cookies are needed, or `serverFetch` if cookies are required.
-5. **Types:** Define types by extending, picking, or omitting existing types/zod schemas. Do not use `any`. Use TypeScript strictly.
+5. **Types:** Define types by extending, picking, or omitting existing types/zod schemas. Do not use `any`. Use TypeScript strictly. All shared or global type definitions must be placed in the `src/types/` directory and exported from `src/types/index.ts`. Interface names should start with an 'I' prefix (e.g., `IUser`, `IPatient`).
 6. **UI and Navigation:** Use shadcn ui components, `<Link>` for routing, and `<Image>` for images everywhere.
 7. **Page Composition & Sections:** Every page's sections must be split into multiple components. Each component could be multiple nested components. Example format:
    ```tsx
