@@ -132,6 +132,9 @@
     @apply font-sans;
     /* scrollbar-gutter: stable; */
   }
+  /* img {
+    @apply h-auto w-auto;
+  } */
 }
 
 @layer components {

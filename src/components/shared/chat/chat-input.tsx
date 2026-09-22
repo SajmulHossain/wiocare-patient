@@ -1,21 +1,26 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   RiSendPlaneFill,
   RiAttachment2,
   RiCloseLine,
-  RiImage2Fill,
   RiFileTextFill,
 } from "@remixicon/react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface ChatInputProps {
   onSendMessage: (message: string, files: File[]) => void;
   placeholder?: string;
   className?: string;
+}
+
+interface FilePreview {
+  file: File;
+  url: string;
 }
 
 export function ChatInput({
@@ -24,13 +29,25 @@ export function ChatInput({
   className,
 }: ChatInputProps) {
   const [message, setMessage] = useState("");
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<FilePreview[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Cleanup object URLs on unmount
+  useEffect(() => {
+    return () => {
+      files.forEach((f) => {
+        URL.revokeObjectURL(f.url);
+      });
+    };
+  }, [files]);
+
+  const handleSubmit = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (message.trim() || files.length > 0) {
-      onSendMessage(message.trim(), files);
+      onSendMessage(
+        message.trim(),
+        files.map((f) => f.file),
+      );
       setMessage("");
       setFiles([]);
     }
@@ -38,36 +55,56 @@ export function ChatInput({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files);
+      const selectedFiles = Array.from(e.target.files).map((file) => ({
+        file,
+        url: URL.createObjectURL(file),
+      }));
       setFiles((prev) => [...prev, ...selectedFiles]);
+    }
+    // Reset input so the same file can be selected again if needed
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
   };
 
-  const removeFile = (index: number) => {
-    setFiles((prev) => prev.filter((_, i) => i !== index));
+  const removeFile = (urlToRemove: string) => {
+    setFiles((prev) => {
+      const newFiles = prev.filter((f) => f.url !== urlToRemove);
+      URL.revokeObjectURL(urlToRemove);
+      return newFiles;
+    });
   };
 
   return (
     <div className={cn("flex flex-col bg-background border-t", className)}>
       {files.length > 0 && (
         <div className="flex gap-2 p-3 overflow-x-auto border-b">
-          {files.map((file) => (
+          {files.map((preview) => (
             <div
-              key={Date.now().toString()}
-              className="relative flex items-center justify-center bg-muted/50 rounded-md h-16 w-16 shrink-0 border group"
+              key={preview.url}
+              className="relative flex items-center justify-center bg-muted/50 rounded-md h-16 w-16 shrink-0 border group overflow-hidden"
             >
-              {file.type.startsWith("image/") ? (
-                <RiImage2Fill className="h-6 w-6 text-muted-foreground" />
+              {preview.file.type.startsWith("image/") ? (
+                <Image
+                  src={preview.url}
+                  alt={preview.file.name}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                  sizes="64px"
+                />
               ) : (
                 <RiFileTextFill className="h-6 w-6 text-muted-foreground" />
               )}
-              <span className="absolute bottom-1 left-1 right-1 text-[8px] truncate text-center opacity-70">
-                {file.name}
-              </span>
+              {!preview.file.type.startsWith("image/") && (
+                <span className="absolute bottom-1 left-1 right-1 text-[8px] truncate text-center opacity-70">
+                  {preview.file.name}
+                </span>
+              )}
               <button
                 type="button"
-                onClick={() => removeFile(Date.now().toString())}
-                className="absolute -top-2 -right-2 bg-background border rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={() => removeFile(preview.url)}
+                className="absolute top-1 right-1 bg-background/80 hover:bg-background border rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity z-10"
               >
                 <RiCloseLine className="h-3 w-3" />
               </button>

@@ -17,7 +17,9 @@ export function NewChatView() {
 
   const handleSendMessage = (text: string, files: File[]) => {
     const attachments = files.map((file) => ({
-      type: file.type.startsWith("image/") ? ("image" as const) : ("pdf" as const),
+      type: file.type.startsWith("image/")
+        ? ("image" as const)
+        : ("pdf" as const),
       name: file.name,
       url: URL.createObjectURL(file),
     }));
@@ -77,14 +79,16 @@ export function NewChatView() {
             "flex w-full z-10",
             messages.length === 0
               ? "flex-1 flex-col items-center justify-center gap-4"
-              : "flex-row items-center gap-3 px-4 pt-4 shrink-0"
+              : "flex-row items-center gap-3 px-4 pt-4 shrink-0",
           )}
         >
           <motion.div
             layout
             className={cn(
               "relative overflow-hidden shadow-sm bg-white p-2 shrink-0",
-              messages.length === 0 ? "h-20 w-20 rounded-2xl" : "h-10 w-10 rounded-xl"
+              messages.length === 0
+                ? "h-20 w-20 rounded-2xl"
+                : "h-10 w-10 rounded-xl",
             )}
           >
             <Image
@@ -92,15 +96,16 @@ export function NewChatView() {
               alt="Wio Chat"
               fill
               className="object-contain"
+              sizes="80px"
             />
           </motion.div>
-          
+
           <motion.div layout className="flex flex-col">
             <motion.h2
               layout
               className={cn(
                 "font-semibold text-foreground",
-                messages.length === 0 ? "text-2xl text-center" : "text-base"
+                messages.length === 0 ? "text-2xl text-center" : "text-base",
               )}
             >
               Wio Support

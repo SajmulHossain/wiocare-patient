@@ -6,7 +6,6 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
@@ -18,29 +17,14 @@ import { RiMessage3Line, RiAddLine } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
 import { SearchForm } from "./dashboard-sidebar/search-form";
 
-const chatHistory = [
-  {
-    group: "Today",
-    chats: [
-      { id: "1", title: "Implement Chat UI System", active: true },
-      { id: "2", title: "Debugging Next.js Build Error", active: false },
-    ],
-  },
-  {
-    group: "Previous 7 Days",
-    chats: [
-      { id: "3", title: "Optimize Postgres Queries", active: false },
-      { id: "4", title: "Generate Logo Concepts", active: false },
-      { id: "5", title: "Review Pull Request #42", active: false },
-    ],
-  },
-  {
-    group: "Previous 30 Days",
-    chats: [
-      { id: "6", title: "How to setup Shadcn UI", active: false },
-      { id: "7", title: "Tailwind CSS Grid vs Flexbox", active: false },
-    ],
-  },
+const chats = [
+  { id: "1", title: "Implement Chat UI System", active: true },
+  { id: "2", title: "Debugging Next.js Build Error", active: false },
+  { id: "3", title: "Optimize Postgres Queries", active: false },
+  { id: "4", title: "Generate Logo Concepts", active: false },
+  { id: "5", title: "Review Pull Request #42", active: false },
+  { id: "6", title: "How to setup Shadcn UI", active: false },
+  { id: "7", title: "Tailwind CSS Grid vs Flexbox", active: false },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -75,34 +59,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
 
       <SidebarContent className="px-2 mt-2 custom-scrollbar">
-        {chatHistory.map((group) => (
-          <SidebarGroup key={group.group} className="px-0 py-2">
-            {!isCollapsed && (
-              <SidebarGroupLabel className="text-[11px] font-semibold text-muted-foreground px-4 pb-2 uppercase tracking-wider">
-                {group.group}
-              </SidebarGroupLabel>
-            )}
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {group.chats.map((chat) => (
-                  <SidebarMenuItem key={chat.id}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={chat.active}
-                      tooltip={chat.title}
-                      className="rounded-full px-3 h-10 data-[active=true]:bg-primary/10 data-[active=true]:text-primary"
-                    >
-                      <Link href={`/chat/${chat.id}`}>
-                        <RiMessage3Line className="h-4.5 w-4.5 shrink-0" />
-                        <span>{chat.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        ))}
+        <SidebarGroup className="px-0 py-2">
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {chats.map((chat) => (
+                <SidebarMenuItem key={chat.id}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={chat.active}
+                    tooltip={chat.title}
+                    className="rounded-full px-3 h-10 data-[active=true]:bg-primary/10 data-[active=true]:text-primary"
+                  >
+                    <Link href={`/chat/${chat.id}`}>
+                      <RiMessage3Line className="h-4.5 w-4.5 shrink-0" />
+                      <span>{chat.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
     </Sidebar>
   );
