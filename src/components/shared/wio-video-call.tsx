@@ -10,7 +10,7 @@ import {
   useRemoteUsers,
 } from "agora-rtc-react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   RiMicFill,
   RiMicOffFill,
@@ -58,8 +58,17 @@ const WioVideoCall = () => {
 
   usePublish([localMicrophoneTrack, localCameraTrack], calling && isConnected);
 
+  useEffect(() => {
+    return () => {
+      localMicrophoneTrack?.close();
+      localCameraTrack?.close();
+    };
+  }, [localMicrophoneTrack, localCameraTrack]);
+
   const endCall = () => {
     setCalling(false);
+    localMicrophoneTrack?.close();
+    localCameraTrack?.close();
     // Redirect to home or another page after ending the call
     router.push("/");
   };
