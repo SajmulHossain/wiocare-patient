@@ -121,6 +121,24 @@ const WioVideoCall = () => {
                     </EmptyMedia>
                   </Empty>
                 )}
+
+                <div className="absolute bottom-4 w-40 bg-black/60 px-2.5 py-1 rounded-md text-white text-xs font-medium backdrop-blur-md right-4">
+                  <div className="flex justify-between items-center w-full">
+                    <span>{user.uid}</span>
+                    <span className="flex gap-2 items-center">
+                      {user.hasAudio ? (
+                        <RiMicFill size={16} />
+                      ) : (
+                        <RiMicOffFill size={16} />
+                      )}
+                      {user.hasVideo ? (
+                        <RiVideoOnFill size={16} />
+                      ) : (
+                        <RiVideoOffFill size={16} />
+                      )}
+                    </span>
+                  </div>
+                </div>
               </div>
             );
           })
