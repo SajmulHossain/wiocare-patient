@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  LocalUser, // Plays the microphone audio track and the camera video track
+  LocalVideoTrack,
   RemoteUser, // Returns whether the SDK is connected to Agora's server
   useJoin, // Automatically join and leave a channel on mount and unmount
   useLocalMicrophoneTrack, // Create a local microphone audio track
@@ -46,6 +46,18 @@ const WioVideoCall = () => {
   const { localCameraTrack } = useLocalCameraTrack(cameraOn);
   const remoteUsers = useRemoteUsers();
 
+  useEffect(() => {
+    if (localMicrophoneTrack) {
+      localMicrophoneTrack.setMuted(!micOn);
+    }
+  }, [micOn, localMicrophoneTrack]);
+
+  useEffect(() => {
+    if (localCameraTrack) {
+      localCameraTrack.setEnabled(cameraOn);
+    }
+  }, [cameraOn, localCameraTrack]);
+
   const { isConnected, isLoading } = useJoin(
     {
       appid: appId,
@@ -58,18 +70,10 @@ const WioVideoCall = () => {
 
   usePublish([localMicrophoneTrack, localCameraTrack], calling && isConnected);
 
-  useEffect(() => {
-    return () => {
-      localMicrophoneTrack?.close();
-      localCameraTrack?.close();
-    };
-  }, [localMicrophoneTrack, localCameraTrack]);
-
   const endCall = () => {
     setCalling(false);
     localMicrophoneTrack?.close();
     localCameraTrack?.close();
-    // Redirect to home or another page after ending the call
     router.push("/");
   };
 
@@ -95,7 +99,7 @@ const WioVideoCall = () => {
           remoteUsers.map((user) => {
             console.log(user);
             return (
-              <div key={user.uid}>
+              <div key={user.uid} className="w-full h-full">
                 {user.hasVideo ? (
                   <RemoteUser
                     user={user}
@@ -130,11 +134,9 @@ const WioVideoCall = () => {
 
       {/* Local User (Top Left Small View) */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 w-32 h-44 sm:w-48 sm:h-64 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl z-10 bg-neutral-800 transition-all duration-300">
-        <LocalUser
-          audioTrack={localMicrophoneTrack}
-          cameraOn={cameraOn}
-          micOn={micOn}
-          videoTrack={localCameraTrack}
+        <LocalVideoTrack
+          track={localCameraTrack}
+          play={cameraOn}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
         <div className="absolute bottom-3 bg-black/60 px-2.5 py-1 rounded-md text-white text-xs font-medium backdrop-blur-md w-full">
