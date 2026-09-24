@@ -2,15 +2,16 @@
 
 import { useState, useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
-import { IMeta } from "@/types";
+import type { IMeta } from "@/types";
 import { Spinner } from "@/components/ui/spinner";
+import { RiGhost2Line, RiLoopLeftAiLine } from "@remixicon/react";
+import { Button } from "../ui/button";
 
 interface CustomPaginationProps {
   meta: IMeta | null;
@@ -55,20 +56,20 @@ export default function CustomPagination({
       <PaginationContent className="gap-2">
         {/* Previous Button */}
         <PaginationItem>
-          <button
+          <Button
             onClick={() => handlePageChange(page - 1)}
             disabled={page === 1 || isPending}
             className="min-w-10 h-10 flex items-center justify-center text-sm font-medium transition-colors bg-card hover:bg-muted text-foreground rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Go to previous page"
           >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
+            <RiLoopLeftAiLine className="h-4 w-4" />
+          </Button>
         </PaginationItem>
 
         {/* Page Numbers */}
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <PaginationItem key={page}>
-            <button
+            <Button
               onClick={() => handlePageChange(page)}
               disabled={isPending}
               className={`
@@ -86,20 +87,20 @@ export default function CustomPagination({
               ) : (
                 page
               )}
-            </button>
+            </Button>
           </PaginationItem>
         ))}
 
         {/* Next Button */}
         <PaginationItem>
-          <button
+          <Button
             onClick={() => handlePageChange(page + 1)}
             disabled={page === totalPages || isPending}
             className="min-w-10 h-10 flex items-center justify-center text-sm font-medium transition-colors bg-card hover:bg-muted text-foreground rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Go to next page"
           >
-            <ChevronRight className="h-4 w-4" />
-          </button>
+            <RiGhost2Line className="h-4 w-4" />
+          </Button>
         </PaginationItem>
       </PaginationContent>
     </Pagination>

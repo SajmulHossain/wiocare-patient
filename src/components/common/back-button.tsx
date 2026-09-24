@@ -1,7 +1,7 @@
 "use client";
-import { ArrowLeftSquare } from "lucide-react";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { RiFlightTakeoffLine } from "@remixicon/react";
 
 function BackButton({
   children,
@@ -16,7 +16,7 @@ function BackButton({
     >
       {children || (
         <>
-          <ArrowLeftSquare className="me-1" /> Back
+          <RiFlightTakeoffLine className="me-1" /> Back
         </>
       )}
     </Button>
