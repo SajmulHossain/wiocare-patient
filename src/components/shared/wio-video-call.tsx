@@ -97,9 +97,11 @@ const WioVideoCall = () => {
       <div className="absolute inset-0 flex items-center justify-center w-full h-full bg-black">
         {remoteUsers.length > 0 ? (
           remoteUsers.map((user) => {
-            console.log(user);
             return (
-              <div key={user.uid} className="w-full h-full">
+              <div
+                key={user.uid}
+                className="w-full h-full grid place-items-center"
+              >
                 {user.hasVideo ? (
                   <RemoteUser
                     user={user}
@@ -139,6 +141,11 @@ const WioVideoCall = () => {
           play={cameraOn}
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
+        {!cameraOn && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <RiVideoOffFill size={48} />
+          </div>
+        )}
         <div className="absolute bottom-3 bg-black/60 px-2.5 py-1 rounded-md text-white text-xs font-medium backdrop-blur-md w-full">
           <div className="flex justify-between items-center w-full">
             <span>You</span>
