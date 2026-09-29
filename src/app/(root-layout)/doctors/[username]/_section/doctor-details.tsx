@@ -1,4 +1,5 @@
 import { fetchDoctorByUsername } from "@/app/(root-layout)/_action/doctor.action";
+import Link from "next/link";
 import ErrorState from "@/components/shared/error-state";
 import EmptyState from "@/components/shared/empty-state";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -97,16 +98,12 @@ export default async function DoctorDetails({
             <div className="mt-8 w-full flex flex-col gap-3">
               <Button
                 size="lg"
-                className="w-full rounded-2xl font-bold text-base h-14"
+                className="w-full rounded-2xl font-bold text-base h-14 text-black"
+                asChild
               >
-                Book Appointment
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full rounded-2xl font-bold text-base h-14"
-              >
-                Consult Online
+                <Link href={`/doctors/${doctor.user?.username}/book`}>
+                  Book Appointment
+                </Link>
               </Button>
             </div>
           </div>

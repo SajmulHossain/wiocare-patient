@@ -14,9 +14,9 @@ import ThemeToggler from "./theme-toggler";
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Contact", href: "/contact" },
+  { name: "Doctors", href: "/doctors" },
+  { name: "Diagnosis", href: "/diagnosis" },
+  { name: "Medicines", href: "/medicines" },
 ];
 
 export function Navbar() {

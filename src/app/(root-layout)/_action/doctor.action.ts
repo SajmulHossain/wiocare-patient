@@ -39,7 +39,7 @@ export const fetchDoctorByUsername = async (
     if (!res.ok || !result.success) {
       throw new Error(result.message || "Failed to fetch data");
     }
-    console.log(result);
+
     let doctorData: IDoctor | null = null;
 
     if (result.data?.doctor) {

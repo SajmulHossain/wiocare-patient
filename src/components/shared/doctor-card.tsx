@@ -106,8 +106,13 @@ export function DoctorCard({ doctor }: { doctor: IDoctor }) {
             </div>
           </div>
         </div>
-        <Button className="w-full rounded-xl font-semibold shadow-sm hover:shadow-md transition-all group-hover:bg-primary group-hover:text-primary-foreground pointer-events-auto">
-          Book Appointment
+        <Button
+          asChild
+          className="w-full rounded-xl font-semibold shadow-sm hover:shadow-md transition-all group-hover:bg-primary group-hover:text-primary-foreground pointer-events-auto"
+        >
+          <Link href={`/doctors/${doctor.user?.username}`}>
+            Book Appointment
+          </Link>
         </Button>
       </CardFooter>
     </Card>
