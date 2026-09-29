@@ -1,10 +1,7 @@
-export type ISearchParams = Promise<{
-  [key: string]: string | string[] | undefined;
-}>;
-
-export type IParams = Promise<{ [key: string]: string | string[] | undefined }>;
-
-export interface IPageProps {
-  params: IParams;
-  searchParams: ISearchParams;
+export interface IPageProps<T> {
+  params: Promise<T>;
+  searchParams: Promise<QueryType>;
 }
+
+// biome-ignore lint/suspicious/noExplicitAny: <It's not very big deal>
+export type QueryType = Record<string, any>;
