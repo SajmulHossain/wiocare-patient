@@ -12,62 +12,10 @@ import {
 } from "@remixicon/react";
 import Image from "next/image";
 import Link from "next/link";
+import { fetchDoctors } from "../_action/doctor.action";
 
-export default function Doctors() {
-  const doctors = [
-    {
-      name: "Dr. Shafiqul Islam",
-      specialty: "Cardiology",
-      degrees: "MBBS, MD (Cardiology), FCPS",
-      experience: "15+ Years",
-      patients: "2000+",
-      rating: 4.9,
-      reviews: 128,
-      location: "Labaid Cardiac Hospital",
-      fee: "৳ 1500",
-      image:
-        "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=400&h=400",
-    },
-    {
-      name: "Dr. Hasan Mahmud",
-      specialty: "Dermatology",
-      degrees: "MBBS, DDV, MCPS (Dermatology)",
-      experience: "10+ Years",
-      patients: "1500+",
-      rating: 4.8,
-      reviews: 93,
-      location: "Square Hospital, Dhaka",
-      fee: "৳ 1200",
-      image:
-        "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=400&h=400",
-    },
-    {
-      name: "Dr. Tariq Rahman",
-      specialty: "Pediatrics",
-      degrees: "MBBS, FCPS (Pediatrics), MD",
-      experience: "12+ Years",
-      patients: "3000+",
-      rating: 5.0,
-      reviews: 215,
-      location: "Evercare Hospital",
-      fee: "৳ 1000",
-      image:
-        "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=400&h=400",
-    },
-    {
-      name: "Dr. Mahmudul Hasan",
-      specialty: "Neurology",
-      degrees: "MBBS, MD (Neurology), PhD",
-      experience: "18+ Years",
-      patients: "1200+",
-      rating: 4.7,
-      reviews: 84,
-      location: "Dhaka Medical College",
-      fee: "৳ 2000",
-      image:
-        "https://images.unsplash.com/photo-1612276529731-4b21494e6d71?auto=format&fit=crop&q=80&w=400&h=400",
-    },
-  ];
+export default async function Doctors() {
+  const doctors = await fetchDoctors(4);
 
   return (
     <section id="doctors" className="bg-muted/30">
@@ -78,21 +26,29 @@ export default function Doctors() {
               Book an Appointment
             </h2>
             <p className="text-muted-foreground text-lg">
-              Consult with Bangladesh's top-rated specialists for personalized care.
+              Consult with Bangladesh's top-rated specialists for personalized
+              care.
             </p>
           </div>
-          <Button variant="outline" asChild className="hidden sm:inline-flex rounded-full px-6">
+          <Button
+            variant="outline"
+            asChild
+            className="hidden sm:inline-flex rounded-full px-6"
+          >
             <Link href="/doctors">View All Doctors</Link>
           </Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {doctors.map((doctor, idx) => (
+          {doctors.map((doctor) => (
             <Card
-              key={idx}
+              key={doctor.id}
               className="relative flex flex-col bg-card hover:shadow-xl transition-all duration-300 border border-border/60 rounded-2xl overflow-hidden group hover:border-primary/50"
             >
-              <Link href={`/doctors/${idx}`} className="absolute inset-0 z-10">
+              <Link
+                href={`/doctors/${doctor.id}`}
+                className="absolute inset-0 z-10"
+              >
                 <span className="sr-only">View {doctor.name}</span>
               </Link>
 
@@ -169,9 +125,7 @@ export default function Doctors() {
                     </div>
                   </div>
                 </div>
-                <Button
-                  className="w-full rounded-xl font-semibold shadow-sm hover:shadow-md transition-all group-hover:bg-primary group-hover:text-primary-foreground pointer-events-auto"
-                >
+                <Button className="w-full rounded-xl font-semibold shadow-sm hover:shadow-md transition-all group-hover:bg-primary group-hover:text-primary-foreground pointer-events-auto">
                   Book Appointment
                 </Button>
               </CardFooter>

@@ -3,6 +3,7 @@ interface IEnv {
   jwt_refresh_token_secret: string;
   api_endpoint: string;
   next_public_base_url: string;
+  backend_base_url: string;
 }
 
 const loadEnv = (): IEnv => {
@@ -11,6 +12,7 @@ const loadEnv = (): IEnv => {
     jwt_refresh_token_secret: process.env.JWT_REFRESH_TOKEN_SECRET as string,
     api_endpoint: process.env.NEXT_PUBLIC_API_ENDPOINT as string,
     next_public_base_url: process.env.NEXT_PUBLIC_BASE_URL as string,
+    backend_base_url: process.env.BACKEND_BASE_URL as string,
   };
 };
 
