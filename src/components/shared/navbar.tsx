@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import Logo from "@/components/shared/logo";
 import { RiMenu2Fill } from "@remixicon/react";
+import ThemeToggler from "./theme-toggler";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -20,7 +21,7 @@ const navLinks = [
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="section py-3 flex h-16 items-center justify-between">
         {/* Left: Logo */}
         <div className="flex items-center">
@@ -81,6 +82,7 @@ export function Navbar() {
                   ))}
                 </nav>
                 <div className="flex flex-col space-y-3 mt-auto pr-6">
+                  <ThemeToggler />
                   <Link href="/login" className="w-full">
                     <Button variant="outline" className="w-full">
                       Log in

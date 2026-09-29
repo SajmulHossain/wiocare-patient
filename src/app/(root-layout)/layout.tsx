@@ -3,11 +3,11 @@ import { Navbar } from "@/components/shared/navbar";
 
 const RootLayoutLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
+    <div className="flex flex-col justify-between min-h-screen">
       <Navbar />
-      <main>{children}</main>
+      <main className="grow">{children}</main>
       <Footer />
-    </>
+    </div>
   );
 };
 

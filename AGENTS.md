@@ -20,7 +20,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Use shadcn ui from the beginning of the project from Home Page to Dashboard everywhere. Try to use highest of shadcn component to make consistency.
 - Use shadcn skeleton ui for loading UI.
 - Use `<Suspense />` component to show the loading UI.
-- Use Next.js `<Image />` tag everywhere.
+- Use Next.js `<Image />` tag everywhere. If you use the `fill` property in the Image component, you MUST also use the `sizes` property.
 
 ## Component Architecture
 
@@ -46,10 +46,13 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Async Components and Params Handling
 
+- Use the common `IPageProps` type from `@/types` for page and component props.
 - Resolve the `params` and `searchParams` in nested async components:
 
 ```tsx
-const Page = ({ params, searchParams }) => {
+import { IPageProps } from "@/types";
+
+const Page = ({ params, searchParams }: IPageProps) => {
   return (
     <Suspense fallback={<LoadingUi />}>
       <NestedComponent params={params} searchParams={searchParams} />
@@ -57,7 +60,7 @@ const Page = ({ params, searchParams }) => {
   );
 };
 
-const NestedComponent = async ({ params, searchParams }) => {
+const NestedComponent = async ({ params, searchParams }: IPageProps) => {
   const resolvedParams = await params;
   // or
   const [resolvedParams, resolvedSearchParams] = await Promise.all([
