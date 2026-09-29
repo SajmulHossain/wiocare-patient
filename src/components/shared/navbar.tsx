@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import Logo from "@/components/shared/logo";
 import { RiMenu2Fill } from "@remixicon/react";
+import ThemeToggler from "./theme-toggler";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -42,6 +43,7 @@ export function Navbar() {
 
         {/* Right: CTA and Mobile Menu */}
         <div className="flex items-center gap-4">
+          <ThemeToggler />
           <div className="hidden md:flex items-center gap-4">
             <Link href="/login">
               <Button variant="ghost">Log in</Button>

@@ -21,6 +21,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Use shadcn skeleton ui for loading UI.
 - Use `<Suspense />` component to show the loading UI.
 - Use Next.js `<Image />` tag everywhere.
+- Always use the `.section` class (defined in `globals.css`) instead of Tailwind's `container` class for section wrappers.
 
 ## Component Architecture
 
