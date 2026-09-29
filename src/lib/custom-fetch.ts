@@ -2,8 +2,7 @@ import envConfig from "@/config/env.config";
 import { getCookies } from "./cookie";
 
 const api_endpoint =
-  envConfig.api_endpoint ||
-  (envConfig.backend_base_url ? `${envConfig.backend_base_url}/api/v1` : "https://cottonsworld-backend.vercel.app/api/v1");
+  envConfig.api_endpoint || `${envConfig.backend_base_url}/api/v1`;
 
 const serverFetchHelper = async (
   endpoint: string,
