@@ -20,7 +20,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Use shadcn ui from the beginning of the project from Home Page to Dashboard everywhere. Try to use highest of shadcn component to make consistency.
 - Use shadcn skeleton ui for loading UI.
 - Use `<Suspense />` component to show the loading UI.
-- Use Next.js `<Image />` tag everywhere. If you use the `fill` property in the Image component, you MUST also use the `sizes` property.
+- Use Next.js `<Image />` tag everywhere.
+- Always use the `.section` class (defined in `globals.css`) instead of Tailwind's `container` class for section wrappers.
 
 ## Component Architecture
 

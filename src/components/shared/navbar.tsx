@@ -43,6 +43,7 @@ export function Navbar() {
 
         {/* Right: CTA and Mobile Menu */}
         <div className="flex items-center gap-4">
+          <ThemeToggler />
           <div className="hidden md:flex items-center gap-4">
             <Link href="/login">
               <Button variant="ghost">Log in</Button>
