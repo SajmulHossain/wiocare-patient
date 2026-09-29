@@ -1,11 +1,13 @@
 import { publicFetch } from "@/lib/custom-fetch";
-import type { IResponse, IDoctor } from "@/types";
+import type { IResponse, IDoctor, QueryType } from "@/types";
+import { getQueryString } from "@/lib/utils";
 
 export const fetchDoctors = async (
-  limit: number = 4,
+  params: QueryType,
 ): Promise<IResponse<IDoctor[]>> => {
+  const query = getQueryString(params);
   try {
-    const res = await publicFetch.get(`/doctors?limit=${limit}`);
+    const res = await publicFetch.get(`/doctors?${query}`);
     const result: IResponse<IDoctor[]> = await res.json();
     if (!res.ok) {
       throw new Error(result.message || "Failed to fetch data");

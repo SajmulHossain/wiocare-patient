@@ -29,7 +29,7 @@ export function DoctorCard({ doctor }: { doctor: IDoctor }) {
               <AvatarImage
                 src={doctor.user?.photo || ""}
                 alt={doctor.user?.name || "Doctor"}
-                className="object-cover object-top"
+                className="object-cover object-tops"
               />
               <AvatarFallback className="bg-muted">
                 <RiUser3Line className="w-8 h-8 text-muted-foreground/50" />
