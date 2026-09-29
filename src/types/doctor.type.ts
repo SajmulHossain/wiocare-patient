@@ -64,6 +64,8 @@ export interface IDoctor {
   visits: IDoctorPatientVisit[];
   queues: IQueue[];
   user: IUser;
+  totalRating?: number;
+  averageRating?: number;
   createdAt: string;
   updatedAt: string;
 }

@@ -7,7 +7,7 @@ import EmptyState from "@/components/shared/empty-state";
 import { DoctorCard } from "@/components/shared/doctor-card";
 
 export default async function Doctors() {
-  const doctorsData = await fetchDoctors(4);
+  const doctorsData = await fetchDoctors({ limit: 4 });
 
   const doctors = doctorsData.data || [];
 

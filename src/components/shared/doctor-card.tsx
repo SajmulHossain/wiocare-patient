@@ -18,7 +18,10 @@ import type { IDoctor } from "@/types";
 export function DoctorCard({ doctor }: { doctor: IDoctor }) {
   return (
     <Card className="relative flex flex-col bg-card hover:shadow-xl transition-all duration-300 border border-border/60 rounded-2xl overflow-hidden group hover:border-primary/50">
-      <Link href={`/doctors/${doctor.id}`} className="absolute inset-0 z-10">
+      <Link
+        href={`/doctors/${doctor.user?.username || doctor.id}`}
+        className="absolute inset-0 z-10"
+      >
         <span className="sr-only">View {doctor.user?.name || "Doctor"}</span>
       </Link>
 
@@ -89,9 +92,9 @@ export function DoctorCard({ doctor }: { doctor: IDoctor }) {
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-1 bg-yellow-400/20 text-yellow-700 px-2.5 py-1 rounded-md text-xs font-bold">
             <RiStarFill className="w-3.5 h-3.5 text-yellow-600" />
-            4.8
+            {doctor.averageRating ? doctor.averageRating.toFixed(1) : "0.0"}
             <span className="font-medium opacity-70 ml-0.5">
-              ({Math.floor(Math.random() * 200) + 50})
+              ({doctor.totalRating || 0})
             </span>
           </div>
           <div className="text-right">
