@@ -1,16 +1,71 @@
-export interface IUser {
-  wioId: string;
-  username: string;
-  name: string;
-  photo?: string;
-  email?: string;
-  phoneNumber?: string;
-  dob?: string;
-  gender?: Gender;
-}
+import type { Gender } from "./enum";
+import type { IAccount } from "./account.type";
+import type { IAdmin } from "./admin.type";
+import type { IDeviceToken } from "./device-token.type";
+import type { IDiagnosisStaff } from "./diagnosis-staff.type";
+import type { IDoctor } from "./doctor.type";
+import type { IDoctorDocument } from "./doctor-document.type";
+import type { IDoctorReview } from "./doctor-review.type";
+import type { IDriver } from "./driver.type";
+import type { IDriverDocument } from "./driver-document.type";
+import type { IFieldWorker } from "./field-worker.type";
+import type { IInvitation } from "./invitation.type";
+import type { IMember } from "./member.type";
+import type { INotification } from "./notification.type";
+import type { IOrganization } from "./organization.type";
+import type { IPatient } from "./patient.type";
+import type { IPrescription } from "./prescription.type";
+import type { IReport } from "./report.type";
+import type { IReportVerifier } from "./report-verifier.type";
+import type { IRider } from "./rider.type";
+import type { ISession } from "./session.type";
+import type { ITest } from "./test.type";
+import type { IVehicleDocument } from "./vehicle-document.type";
+import type { Roles } from "./enum";
 
-export enum Gender {
-  MALE = "MALE",
-  FEMALE = "FEMALE",
-  OTHER = "OTHER",
+export interface IUser {
+  id: string;
+  wioId: string;
+  email: string | null;
+  name: string;
+  gender: Gender | null;
+  dob: string | null;
+  isBlocked: boolean;
+  isDeleted: boolean;
+  emailVerified: boolean;
+  phoneNumber: string | null;
+  phoneNumberVerified: boolean;
+  mobile: string | null;
+  photo: string | null;
+  role: Roles;
+  termsAccepted: boolean;
+  termsAcceptedAt: string | null;
+  username: string;
+  banned: boolean;
+  banReason: string | null;
+  banExpires: string | null;
+  session: ISession[];
+  account: IAccount[];
+  prescriptionsAdded: IPrescription[];
+  reportsAdded: IReport[];
+  notifications: INotification[];
+  deviceTokens: IDeviceToken[];
+  patient: IPatient | null;
+  doctor: IDoctor | null;
+  driver: IDriver | null;
+  rider: IRider | null;
+  diagnosisStaff: IDiagnosisStaff | null;
+  verifiedVehicleDocs: IVehicleDocument[];
+  verifiedDriverDocs: IDriverDocument[];
+  verifiedDoctorDocs: IDoctorDocument[];
+  admin: IAdmin | null;
+  fieldWorker: IFieldWorker | null;
+  members: IMember[];
+  organizations: IOrganization[];
+  invitations: IInvitation[];
+  createdAt: string;
+  updatedAt: string;
+  doctorReviews: IDoctorReview[];
+  verifierReviews: IReportVerifier[];
+  acknowledgedTestAlerts: ITest[];
 }

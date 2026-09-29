@@ -1,0 +1,46 @@
+import type { IMedicineBrand } from "./medicine-brand.type";
+import type { IMedicineCategory } from "./medicine-category.type";
+import type { IMedicineClass } from "./medicine-class.type";
+import type { IMedicineGeneric } from "./medicine-generic.type";
+import type { IMedicineIndication } from "./medicine-indication.type";
+import type { IMedicineManufacturer } from "./medicine-manufacturer.type";
+import type { IOrderItem } from "./order-item.type";
+import type { RouteOfAdministration } from "./enum";
+import type { StorageCondition } from "./enum";
+
+export interface IMedicine {
+  id: string;
+  name: string;
+  strength: string | null;
+  slug: string;
+  manufacturerId: string;
+  categoryId: string;
+  genericId: string | null;
+  medicineBrandId: string | null;
+  isRxRequired: boolean;
+  isNarcotic: boolean;
+  storageCondition: StorageCondition;
+  route: RouteOfAdministration | null;
+  sideEffects: string | null;
+  weightInGrams: number | null;
+  imageUrls: string[];
+  mrp: string;
+  discountPrice: string | null;
+  discountPercentage: number | null;
+  baseUnit: string;
+  packUnit: string | null;
+  packSize: number;
+  description: string | null;
+  metaKeywords: string[];
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  manufacturer: IMedicineManufacturer;
+  category: IMedicineCategory;
+  generic: IMedicineGeneric | null;
+  medicineBrand: IMedicineBrand | null;
+  indications: IMedicineIndication[];
+  orderItems: IOrderItem[];
+  medicineClass: IMedicineClass | null;
+  medicineClassId: string | null;
+}
