@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import BookAppointmentSection from "./_section/book-appointment-section";
+import BookAppointmentSkeleton from "./_suspense/book-appointment-skeleton";
 import type { IPageProps } from "@/types";
 
 export default function BookAppointmentPage({
@@ -8,7 +8,7 @@ export default function BookAppointmentPage({
   searchParams,
 }: IPageProps<{ username: string }>) {
   return (
-    <Suspense fallback={<Skeleton className="w-full h-screen" />}>
+    <Suspense fallback={<BookAppointmentSkeleton />}>
       <BookAppointmentSection params={params} searchParams={searchParams} />
     </Suspense>
   );
