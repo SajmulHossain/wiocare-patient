@@ -41,11 +41,9 @@ export default function MedicineFilters() {
   // Debounced search
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      const currentSearch = searchParams.get("searchTerm") || "";
+      const currentSearch = searchParams.get("search") || "";
       if (searchTerm !== currentSearch) {
-        router.push(
-          `/medicines?${createQueryString("searchTerm", searchTerm)}`,
-        );
+        router.push(`/medicines?${createQueryString("search", searchTerm)}`);
       }
     }, 500);
 
