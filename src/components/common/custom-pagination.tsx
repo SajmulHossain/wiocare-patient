@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { IMeta } from "@/types";
 import { Spinner } from "@/components/ui/spinner";
-import { RiGhost2Line, RiLoopLeftAiLine } from "@remixicon/react";
+import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";
 import { Button } from "../ui/button";
 
 interface CustomPaginationProps {
@@ -62,7 +62,7 @@ export default function CustomPagination({
             className="min-w-10 h-10 flex items-center justify-center text-sm font-medium transition-colors bg-card hover:bg-muted text-foreground rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Go to previous page"
           >
-            <RiLoopLeftAiLine className="h-4 w-4" />
+            <RiArrowLeftLine className="h-4 w-4" />
           </Button>
         </PaginationItem>
 
@@ -82,11 +82,7 @@ export default function CustomPagination({
                 }
               `}
             >
-              {isPending && pendingPage === page ? (
-                <Spinner className="ml-2" />
-              ) : (
-                page
-              )}
+              {isPending && pendingPage === page ? <Spinner /> : page}
             </Button>
           </PaginationItem>
         ))}
@@ -99,7 +95,7 @@ export default function CustomPagination({
             className="min-w-10 h-10 flex items-center justify-center text-sm font-medium transition-colors bg-card hover:bg-muted text-foreground rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Go to next page"
           >
-            <RiGhost2Line className="h-4 w-4" />
+            <RiArrowRightLine className="h-4 w-4" />
           </Button>
         </PaginationItem>
       </PaginationContent>
