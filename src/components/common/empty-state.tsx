@@ -1,61 +1,38 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import {
+  type RemixiconComponentType,
+  RiInboxArchiveLine,
+} from "@remixicon/react";
 import {
   Empty,
-  EmptyTitle,
-  EmptyDescription,
-  EmptyContent,
   EmptyMedia,
   EmptyHeader,
+  EmptyTitle,
+  EmptyDescription,
 } from "@/components/ui/empty";
-import type { RemixiconComponentType } from "@remixicon/react";
 
 interface EmptyStateProps {
-  icon?: RemixiconComponentType | React.ComponentType<{ className?: string }>;
-  title: string;
-  description?: string;
-  actionLabel?: string;
-  actionHref?: string;
-  className?: string;
-  type?: "default" | "error" | "warning" | "success";
+  title?: string;
+  message?: string;
+  icon?: RemixiconComponentType;
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({
-  icon: Icon,
-  title,
-  description,
-  actionLabel,
-  actionHref,
-  className,
-  type = "default",
-}) => {
+export default function EmptyState({
+  title = "No Data Found",
+  message = "There is currently no data to display here.",
+  icon = RiInboxArchiveLine,
+}: EmptyStateProps) {
+  const Icon = icon;
   return (
-    <Empty className={cn(className, "border border-dashed")}>
+    <Empty className="bg-muted/20 border border-primary">
       <EmptyHeader>
-        {Icon && (
-          <EmptyMedia>
-            <Icon
-              className={cn({
-                "text-red-500": type === "error",
-                "text-yellow-500": type === "warning",
-                "text-green-500": type === "success",
-              })}
-            />
-          </EmptyMedia>
-        )}
-        <EmptyTitle>{title}</EmptyTitle>
+        <EmptyMedia className="w-12 h-12 bg-primary/10">
+          <Icon className="text-primary w-6 h-6" />
+        </EmptyMedia>
+        <EmptyTitle className="text-lg mt-2">{title}</EmptyTitle>
+        <EmptyDescription className="text-sm max-w-sm">
+          {message}
+        </EmptyDescription>
       </EmptyHeader>
-      {description && <EmptyDescription>{description}</EmptyDescription>}
-      {actionLabel && actionHref && (
-        <EmptyContent className="mt-4">
-          <Button asChild>
-            <Link href={actionHref}>{actionLabel}</Link>
-          </Button>
-        </EmptyContent>
-      )}
     </Empty>
   );
-};
-
-export default EmptyState;
+}

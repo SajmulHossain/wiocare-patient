@@ -1,7 +1,7 @@
 import EmptyState from "@/components/common/empty-state";
 import { RiNotification2Fill } from "@remixicon/react";
 import { ChatSection } from "./_section/chat-section";
-import { WioVirtualCard } from "@/components/shared/wio-virtual-card";
+import { WioVirtualCard } from "@/components/common/wio-virtual-card";
 import { CustomQRCode } from "@/components/common/custom-qr-code";
 
 const DashboardPage = () => {

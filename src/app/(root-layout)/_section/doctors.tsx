@@ -2,9 +2,9 @@ import { Button } from "@/components/ui/button";
 import { RiStethoscopeFill } from "@remixicon/react";
 import Link from "next/link";
 import { fetchDoctors } from "../_action/doctor.action";
-import ErrorState from "@/components/shared/error-state";
-import EmptyState from "@/components/shared/empty-state";
-import { DoctorCard } from "@/components/shared/doctor-card";
+import ErrorState from "@/components/common/error-state";
+import EmptyState from "@/components/common/empty-state";
+import { DoctorCard } from "@/components/common/doctor-card";
 
 export default async function Doctors() {
   const doctorsData = await fetchDoctors({ limit: 4 });

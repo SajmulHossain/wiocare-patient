@@ -5,8 +5,8 @@ import {
   ChatLayout,
   ChatMessageList,
   ChatInput,
-} from "@/components/shared/chat";
-import type { ChatMessageProps } from "@/components/shared/chat";
+} from "@/components/common/chat";
+import type { ChatMessageProps } from "@/components/common/chat";
 import Image from "next/image";
 import wioChatLogo from "@/assets/images/icons/wio-chat.png";
 import { motion, AnimatePresence } from "motion/react";

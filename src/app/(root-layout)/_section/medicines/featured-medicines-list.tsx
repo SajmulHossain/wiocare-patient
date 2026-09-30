@@ -1,5 +1,7 @@
 import { fetchMedicines } from "@/app/(root-layout)/_action/medicine.action";
-import { MedicineCard } from "@/components/shared/medicine-card";
+import EmptyState from "@/components/common/empty-state";
+import { MedicineCard } from "@/components/common/medicine-card";
+import { RiFirstAidKitLine } from "@remixicon/react";
 
 export default async function FeaturedMedicinesList() {
   const medicinesData = await fetchMedicines({ limit: 4 });
@@ -7,9 +9,11 @@ export default async function FeaturedMedicinesList() {
 
   if (medicines.length === 0) {
     return (
-      <div className="text-center text-muted-foreground py-10">
-        No medicines found.
-      </div>
+      <EmptyState
+        title="No Medicines Found"
+        message="We couldn't find any medicines matching your search criteria. Please try adjusting your filters."
+        icon={RiFirstAidKitLine}
+      />
     );
   }
 

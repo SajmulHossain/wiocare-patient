@@ -1,6 +1,6 @@
 import { fetchAvailableSchedules } from "@/app/(root-layout)/_action/schedule.action";
-import ErrorState from "@/components/shared/error-state";
-import EmptyState from "@/components/shared/empty-state";
+import ErrorState from "@/components/common/error-state";
+import EmptyState from "@/components/common/empty-state";
 import { RiCalendarCheckLine } from "@remixicon/react";
 import type { IPageProps } from "@/types";
 import SlotSelectionForm from "./slot-selection-form";

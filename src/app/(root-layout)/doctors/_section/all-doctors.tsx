@@ -1,7 +1,7 @@
 import { fetchDoctors } from "@/app/(root-layout)/_action/doctor.action";
-import ErrorState from "@/components/shared/error-state";
-import EmptyState from "@/components/shared/empty-state";
-import { DoctorCard } from "@/components/shared/doctor-card";
+import ErrorState from "@/components/common/error-state";
+import EmptyState from "@/components/common/empty-state";
+import { DoctorCard } from "@/components/common/doctor-card";
 import { RiStethoscopeFill } from "@remixicon/react";
 import type { IPageProps } from "@/types";
 

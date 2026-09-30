@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { RiMessage3Line, RiAddLine } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
-import { SearchForm } from "./dashboard-sidebar/search-form";
+import { SearchForm } from "../../dashboard-sidebar/search-form";
 
 const chats = [
   { id: "1", title: "Implement Chat UI System", active: true },

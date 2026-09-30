@@ -5,8 +5,8 @@ import {
   ChatLayout,
   ChatMessageList,
   ChatInput,
-} from "@/components/shared/chat";
-import type { ChatMessageProps } from "@/components/shared/chat";
+} from "@/components/common/chat";
+import type { ChatMessageProps } from "@/components/common/chat";
 
 export const ChatSection = () => {
   const [messages, setMessages] = useState<ChatMessageProps[]>([

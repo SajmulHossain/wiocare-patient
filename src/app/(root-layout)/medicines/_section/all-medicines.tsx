@@ -1,7 +1,7 @@
 import { fetchMedicines } from "@/app/(root-layout)/_action/medicine.action";
-import ErrorState from "@/components/shared/error-state";
-import EmptyState from "@/components/shared/empty-state";
-import { MedicineCard } from "@/components/shared/medicine-card";
+import ErrorState from "@/components/common/error-state";
+import EmptyState from "@/components/common/empty-state";
+import { MedicineCard } from "@/components/common/medicine-card";
 import { RiFirstAidKitLine } from "@remixicon/react";
 import type { IPageProps } from "@/types";
 
