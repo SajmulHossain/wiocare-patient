@@ -8,7 +8,7 @@ description: Guide for creating a new Next.js page following WioCare standards.
 When asked to create a new page in the WioCare project, follow these steps:
 
 1. **Server Component by Default:** Ensure the page is a Server Component. Do NOT use `'use client'` in a page (`page.tsx`) file.
-2. **Params and SearchParams Handling:** Do not await `params` or `searchParams` directly in the page component. Instead, pass them to a nested asynchronous Server Component wrapped in a `<Suspense>` boundary using a shadcn skeleton UI as a fallback. **Note:** Only wrap the dynamic fetching components inside `<Suspense>`. Keep static content (like page headers, descriptions, filters, etc.) outside at the page level so the skeleton only masks the dynamic data.
+2. **Params and SearchParams Handling:** Do not await `params` or `searchParams` directly in the page component. Instead, pass them to a nested asynchronous Server Component wrapped in a `<Suspense>` boundary using a shadcn skeleton UI as a fallback. **Note:** Only wrap the dynamic fetching components inside `<Suspense>`. Keep static content (like page headers, descriptions, filters, etc.) outside at the page level so the skeleton only masks the dynamic data. **Important:** If there is no need for `params` or `searchParams` in the page or component, do not take them as props.
 
    ```tsx
    import { Suspense } from "react";
@@ -16,6 +16,7 @@ When asked to create a new page in the WioCare project, follow these steps:
    import NestedComponent from "./_components/nested-component";
    import { IPageProps } from "@/types";
 
+   // Omit params and searchParams if they are not needed
    export default function Page({ params, searchParams }: IPageProps) {
      return (
        <section className="min-h-screen">

@@ -48,8 +48,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Async Components and Params Handling
 
 - **Suspense Boundaries:** Only dynamic things that require fetching should be wrapped in the `<Suspense>` component. Static parts (like page headers, introductory text, and filters) must be placed at the page level outside of Suspense. This ensures that the skeleton UI only masks the dynamic content itself (e.g., data grids or list items).
-- Use the common `IPageProps` type from `@/types` for page and component props.
-- Resolve the `params` and `searchParams` in nested async components:
+- **No Unused Params:** If there is no need for `params` or `searchParams` in a page or component, do not include them in the props.
+- Use the common `IPageProps` type from `@/types` for page and component props (only when needed).
+- Resolve the `params` and `searchParams` in nested async components (if required):
 
 ```tsx
 import { IPageProps } from "@/types";
