@@ -1,9 +1,9 @@
 import { publicFetch } from "@/lib/custom-fetch";
-import type { IResponse, IDoctorSlot } from "@/types";
+import type { IResponse, IDoctorDailyRoster } from "@/types";
 
 export const fetchAvailableSchedules = async (
   username: string,
-): Promise<IResponse<IDoctorSlot[]>> => {
+): Promise<IResponse<IDoctorDailyRoster[]>> => {
   try {
     const res = await publicFetch.get(`/schedules/available/${username}`);
     const result = await res.json();
