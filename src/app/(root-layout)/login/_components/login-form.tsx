@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 import { RiLoader4Line } from "@remixicon/react";
@@ -119,10 +120,9 @@ export const LoginForm = () => {
                       Forgot your password?
                     </Link>
                   </div>
-                  <Input
+                  <PasswordInput
                     id={field.name}
                     name={field.name}
-                    type="password"
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}

@@ -1,15 +1,12 @@
 "use client";
 
-import * as React from "react";
 import { cn } from "cn";
 import { Input } from "@/components/ui/input";
 import { RiEyeLine, RiEyeCloseLine } from "@remixicon/react";
+import { useState } from "react";
 
-function PasswordInput({
-  className,
-  ...props
-}: React.ComponentProps<"input">) {
-  const [showPassword, setShowPassword] = React.useState(false);
+function PasswordInput({ className, ...props }: React.ComponentProps<"input">) {
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="relative">

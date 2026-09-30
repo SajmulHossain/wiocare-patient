@@ -15,22 +15,25 @@ export const AuthPageTransition = ({
   const origin = direction === "left" ? "left center" : "right center";
 
   return (
-    <div className="w-full flex justify-center" style={{ perspective: "1500px" }}>
+    <div
+      className="w-full flex justify-center"
+      style={{ perspective: "1500px" }}
+    >
       <motion.div
-        initial={{ 
-          rotateY: rotateYStart, 
-          opacity: 0, 
+        initial={{
+          rotateY: rotateYStart,
+          opacity: 0,
           scale: 0.95,
-          transformOrigin: origin
+          transformOrigin: origin,
         }}
-        animate={{ 
-          rotateY: 0, 
-          opacity: 1, 
-          scale: 1 
+        animate={{
+          rotateY: 0,
+          opacity: 1,
+          scale: 1,
         }}
-        transition={{ 
-          duration: 0.7, 
-          ease: [0.22, 1, 0.36, 1] 
+        transition={{
+          duration: 0.7,
+          ease: [0.22, 1, 0.36, 1],
         }}
         className="w-full flex justify-center"
       >
