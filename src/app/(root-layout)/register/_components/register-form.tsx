@@ -28,7 +28,7 @@ export const RegisterForm = () => {
   const form = useForm({
     defaultValues: {
       fullName: "",
-      email: "",
+      identifier: "",
       password: "",
       confirmPassword: "",
     } as RegisterFormValues,
@@ -93,7 +93,7 @@ export const RegisterForm = () => {
           />
 
           <form.Field
-            name="email"
+            name="identifier"
             children={(field) => {
               const isInvalid =
                 field.state.meta.isTouched && !field.state.meta.isValid;
@@ -103,16 +103,16 @@ export const RegisterForm = () => {
                     htmlFor={field.name}
                     className="font-semibold text-sm"
                   >
-                    Email
+                    Email or Phone Number
                   </FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
-                    type="email"
+                    type="text"
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="m@example.com"
+                    placeholder="Enter email or phone number"
                     aria-invalid={isInvalid}
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
