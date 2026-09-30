@@ -4,6 +4,7 @@ interface IEnv {
   api_endpoint: string;
   next_public_base_url: string;
   backend_base_url: string;
+  auth_api_base_url: string;
 }
 
 const loadEnv = (): IEnv => {
@@ -13,6 +14,7 @@ const loadEnv = (): IEnv => {
     api_endpoint: process.env.NEXT_PUBLIC_API_ENDPOINT as string,
     next_public_base_url: process.env.NEXT_PUBLIC_BASE_URL as string,
     backend_base_url: process.env.BACKEND_BASE_URL as string,
+    auth_api_base_url: process.env.AUTH_API_BASE_URL as string,
   };
 };
 

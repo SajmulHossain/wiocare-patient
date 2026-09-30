@@ -1,8 +1,16 @@
+import { phoneZodSchema } from "@/app/profile/_schema/profile.schema";
 import { z } from "zod";
 
 export const loginSchema = z.object({
-  email: z.email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  identifier: z.union(
+    [z.email({ error: "Invalid email address" }), phoneZodSchema],
+    {
+      error: "Invalid credentials",
+    },
+  ),
+  password: z
+    .string({ error: "Password must be string" })
+    .min(6, { error: "Password must be atleast 6 characters long!" }),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;

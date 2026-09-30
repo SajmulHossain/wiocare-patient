@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useTransition } from "react";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -21,13 +21,15 @@ import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { RiLoader4Line } from "@remixicon/react";
 import { toast } from "sonner";
 
+import { loginAction } from "../_action/login.action";
+
 export const LoginForm = () => {
-  const [isSaving, setIsSaving] = useState(false);
+  const [isSaving, startTransition] = useTransition();
   const router = useRouter();
 
   const form = useForm({
     defaultValues: {
-      email: "",
+      identifier: "",
       password: "",
     } as LoginFormValues,
     validators: {
@@ -35,13 +37,15 @@ export const LoginForm = () => {
       onChange: loginSchema,
     },
     onSubmit: async ({ value }) => {
-      setIsSaving(true);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("Logged in successfully!");
-      console.log("Login credentials:", value);
-      setIsSaving(false);
-      router.push("/dashboard");
+      startTransition(async () => {
+        const result = await loginAction(value);
+        if (result.success) {
+          toast.success(result.message);
+          router.push("/dashboard");
+        } else {
+          toast.error(result.message);
+        }
+      });
     },
   });
 
@@ -52,7 +56,7 @@ export const LoginForm = () => {
           Login to your account
         </CardTitle>
         <CardDescription>
-          Enter your email below to login to your account
+          Enter your credentials below to login to your account
         </CardDescription>
       </CardHeader>
 
@@ -66,7 +70,7 @@ export const LoginForm = () => {
       >
         <CardContent className="grid gap-6">
           <form.Field
-            name="email"
+            name="identifier"
             children={(field) => {
               const isInvalid =
                 field.state.meta.isTouched && !field.state.meta.isValid;
@@ -76,16 +80,16 @@ export const LoginForm = () => {
                     htmlFor={field.name}
                     className="font-semibold text-sm"
                   >
-                    Email
+                    Email or Phone Number
                   </FieldLabel>
                   <Input
                     id={field.name}
                     name={field.name}
-                    type="email"
+                    type="text"
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="m@example.com"
+                    placeholder="Enter email or phone number"
                     aria-invalid={isInvalid}
                   />
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
