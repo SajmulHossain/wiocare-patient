@@ -8,7 +8,7 @@ description: Guide for creating a new Next.js page following WioCare standards.
 When asked to create a new page in the WioCare project, follow these steps:
 
 1. **Server Component by Default:** Ensure the page is a Server Component. Do NOT use `'use client'` in a page (`page.tsx`) file.
-2. **Params and SearchParams Handling:** Do not await `params` or `searchParams` directly in the page component. Instead, pass them to a nested asynchronous Server Component wrapped in a `<Suspense>` boundary using a shadcn skeleton UI as a fallback.
+2. **Params and SearchParams Handling:** Do not await `params` or `searchParams` directly in the page component. Instead, pass them to a nested asynchronous Server Component wrapped in a `<Suspense>` boundary using a shadcn skeleton UI as a fallback. **Note:** Only wrap the dynamic fetching components inside `<Suspense>`. Keep static content (like page headers, descriptions, filters, etc.) outside at the page level so the skeleton only masks the dynamic data.
 
    ```tsx
    import { Suspense } from "react";
@@ -18,14 +18,24 @@ When asked to create a new page in the WioCare project, follow these steps:
 
    export default function Page({ params, searchParams }: IPageProps) {
      return (
-       <Suspense fallback={<Skeleton className="w-full h-screen" />}>
-         <NestedComponent params={params} searchParams={searchParams} />
-       </Suspense>
+       <section className="min-h-screen">
+         <div className="section">
+           {/* Static content outside Suspense */}
+           <h1>Page Header</h1>
+           <p>Page Description</p>
+
+           {/* Dynamic content inside Suspense */}
+           <Suspense fallback={<Skeleton className="w-full h-125" />}>
+             <NestedComponent params={params} searchParams={searchParams} />
+           </Suspense>
+         </div>
+       </section>
      );
    }
    ```
 
 3. **Nested Async Component:** Inside the nested component, use `Promise.all` to await `params` and `searchParams`.
+
    ```tsx
    export default async function NestedComponent({
      params,
@@ -40,6 +50,7 @@ When asked to create a new page in the WioCare project, follow these steps:
      return <div>Page Content</div>;
    }
    ```
+
 4. **Data Fetching:** Fetch data inside the nested component. Use the `publicFetch` function if no cookies are needed, or `serverFetch` if cookies are required.
 5. **Types:** Define types by extending, picking, or omitting existing types/zod schemas. Do not use `any`. Use TypeScript strictly. All shared or global type definitions must be placed in the `src/types/` directory and exported from `src/types/index.ts`. Interface names should start with an 'I' prefix (e.g., `IUser`, `IPatient`).
 6. **UI and Navigation:** Use shadcn ui components, `<Link>` for routing, and `<Image>` for images everywhere. If you use the `fill` property in the Image component, you MUST also use the `sizes` property.
