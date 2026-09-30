@@ -51,21 +51,22 @@ export default function MedicineFilters() {
   }, [searchTerm, createQueryString, router, searchParams]);
 
   const handleSortChange = (value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
     if (value === "price_asc") {
-      router.push(
-        `/medicines?${createQueryString("sortBy", "mrp")}&sortOrder=asc`,
-      );
+      params.set("sortBy", "mrp");
+      params.set("sortOrder", "asc");
+      router.push(`/medicines?${params.toString()}`);
       setSortBy("mrp");
       setSortOrder("asc");
     } else if (value === "price_desc") {
-      router.push(
-        `/medicines?${createQueryString("sortBy", "mrp")}&sortOrder=desc`,
-      );
+      params.set("sortBy", "mrp");
+      params.set("sortOrder", "desc");
+      router.push(`/medicines?${params.toString()}`);
       setSortBy("mrp");
       setSortOrder("desc");
     } else {
       // Clear sorting
-      const params = new URLSearchParams(searchParams.toString());
       params.delete("sortBy");
       params.delete("sortOrder");
       router.push(`/medicines?${params.toString()}`);
@@ -85,7 +86,7 @@ export default function MedicineFilters() {
 
   return (
     <div className="flex flex-col sm:flex-row gap-4 mb-8 bg-card/60 backdrop-blur-sm p-4 rounded-3xl border border-border/60 shadow-sm transition-all duration-300 hover:shadow-md hover:border-border">
-      <div className="relative flex-grow">
+      <div className="relative grow">
         <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-muted-foreground">
           <RiSearchLine className="w-5 h-5 transition-colors group-focus-within:text-primary" />
         </div>
@@ -103,7 +104,7 @@ export default function MedicineFilters() {
           <RiFilter3Line className="w-5 h-5" />
         </div>
         <Select value={currentSortValue} onValueChange={handleSortChange}>
-          <SelectTrigger className="h-12 w-full sm:w-[220px] rounded-2xl border-border/50 bg-background/50 shadow-sm focus:ring-primary/20 transition-all">
+          <SelectTrigger className="h-12 w-full sm:w-55 rounded-2xl border-border/50 bg-background/50 shadow-sm focus:ring-primary/20 transition-all">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent className="rounded-2xl border-border/50 shadow-lg">
