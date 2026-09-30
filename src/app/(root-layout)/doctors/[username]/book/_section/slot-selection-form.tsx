@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { format } from "date-fns";
 import type { IDoctorDailyRoster } from "@/types";
-import { Button } from "@/components/ui/button";
 
 const formatTime = (timeString: string) => {
   if (!timeString) return "";
@@ -31,7 +30,11 @@ export default function SlotSelectionForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-10">
+    <form
+      id="doctor-schedule-booking-form"
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-10"
+    >
       {schedules.map((roster) => {
         if (!roster.doctorSlots || roster.doctorSlots.length === 0) {
           return null;
@@ -104,14 +107,6 @@ export default function SlotSelectionForm({
             ? "You have selected a time slot. Click continue to proceed."
             : "Please select a time slot to continue."}
         </p>
-        <Button
-          type="submit"
-          size="lg"
-          disabled={!selectedSlotId}
-          className="rounded-2xl font-bold px-10 h-14 w-full sm:w-auto"
-        >
-          Continue Booking
-        </Button>
       </div>
     </form>
   );
