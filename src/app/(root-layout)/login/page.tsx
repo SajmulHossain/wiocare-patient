@@ -4,7 +4,7 @@ import { LoginSection } from "./_section/login-section";
 
 export default function LoginPage() {
   return (
-    <section className="min-h-[80vh] flex flex-col items-center justify-center py-16">
+    <section className="min-h-screen flex flex-col items-center justify-center py-16">
       <div className="section w-full">
         <div className="text-center mb-6">
           <h1 className="text-4xl font-bold tracking-tight mb-2">

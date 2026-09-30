@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { RiEyeLine, RiEyeCloseLine } from "@remixicon/react";
 import { useState } from "react";
 
-function PasswordInput({ className, ...props }: React.ComponentProps<"input">) {
+function PasswordInput({ className, placeholder = "********", ...props }: React.ComponentProps<"input">) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -13,6 +13,7 @@ function PasswordInput({ className, ...props }: React.ComponentProps<"input">) {
       <Input
         type={showPassword ? "text" : "password"}
         className={cn("pr-9", className)}
+        placeholder={placeholder}
         {...props}
       />
       <button
