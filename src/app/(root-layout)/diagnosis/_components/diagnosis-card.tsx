@@ -9,7 +9,7 @@ interface DiagnosisCardProps {
 
 export default function DiagnosisCard({ test }: DiagnosisCardProps) {
   return (
-    <Link href={`/diagnosis/${test.id}`} className="block group h-full">
+    <Link href={`/diagnosis/${test.slug}`} className="block group h-full">
       <div className="bg-background rounded-2xl p-6 h-full border border-border shadow-sm transition-all duration-300 hover:shadow-md hover:border-primary/30 hover:-translate-y-1 relative overflow-hidden flex flex-col">
         <div className="absolute top-0 left-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-colors duration-300" />
 

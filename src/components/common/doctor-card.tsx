@@ -5,12 +5,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  RiStarFill,
-  RiMapPinLine,
-  RiVerifiedBadgeFill,
-  RiUser3Line,
-} from "@remixicon/react";
+import { RiStarFill, RiMapPinLine, RiUser3Line } from "@remixicon/react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { IDoctor } from "@/types";
@@ -41,9 +36,8 @@ export function DoctorCard({ doctor }: { doctor: IDoctor }) {
             <div className="absolute bottom-1 right-1 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full z-20"></div>
           </div>
           <div>
-            <h3 className="font-bold text-lg leading-tight flex items-center gap-1 group-hover:text-primary transition-colors">
+            <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors">
               {doctor.user?.name || "Unknown Doctor"}
-              <RiVerifiedBadgeFill className="w-4 h-4 text-blue-500 shrink-0" />
             </h3>
             <p className="text-primary font-medium text-sm mt-1">
               {doctor.specialties?.[0]?.specialty?.name ||
