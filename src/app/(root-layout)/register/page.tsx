@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { SignupSection } from "./_section/signup-section";
+import { RegisterSection } from "./_section/register-section";
 
-export default function SignupPage() {
+export default function RegisterPage() {
   return (
     <section className="min-h-[80vh] flex flex-col items-center justify-center py-16">
       <div className="section w-full">
@@ -22,7 +22,7 @@ export default function SignupPage() {
             </div>
           }
         >
-          <SignupSection />
+          <RegisterSection />
         </Suspense>
       </div>
     </section>

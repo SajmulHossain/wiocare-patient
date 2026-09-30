@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type SignupFormValues, signupSchema } from "../_schema/signup.schema";
+import { type RegisterFormValues, registerSchema } from "../_schema/register.schema";
 
 import {
   Card,
@@ -21,7 +21,7 @@ import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 import { RiLoader4Line } from "@remixicon/react";
 import { toast } from "sonner";
 
-export const SignupForm = () => {
+export const RegisterForm = () => {
   const [isSaving, setIsSaving] = useState(false);
   const router = useRouter();
 
@@ -31,17 +31,17 @@ export const SignupForm = () => {
       email: "",
       password: "",
       confirmPassword: "",
-    } as SignupFormValues,
+    } as RegisterFormValues,
     validators: {
       onChangeAsyncDebounceMs: 1000,
-      onChange: signupSchema,
+      onChange: registerSchema,
     },
     onSubmit: async ({ value }) => {
       setIsSaving(true);
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
       toast.success("Account created successfully!");
-      console.log("Signup data:", value);
+      console.log("Register data:", value);
       setIsSaving(false);
       router.push("/dashboard");
     },

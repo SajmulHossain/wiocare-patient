@@ -165,10 +165,10 @@ export const LoginForm = () => {
           <p className="text-sm text-muted-foreground text-center">
             Don't have an account?{" "}
             <Link
-              href="/signup"
+              href="/register"
               className="text-foreground font-medium hover:underline underline-offset-4"
             >
-              Sign up
+              Register
             </Link>
           </p>
         </CardFooter>
