@@ -17,7 +17,7 @@ export default async function AllMedicines({
   const medicines = medicinesData?.data || [];
 
   return (
-    <div className="pt-10 pb-16">
+    <>
       {!medicinesData?.success ? (
         <ErrorState message={medicinesData?.message} />
       ) : medicines.length === 0 ? (
@@ -33,6 +33,6 @@ export default async function AllMedicines({
           ))}
         </div>
       )}
-    </div>
+    </>
   );
 }

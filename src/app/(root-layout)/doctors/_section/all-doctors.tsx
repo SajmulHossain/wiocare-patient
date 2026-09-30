@@ -18,34 +18,22 @@ export default async function AllDoctors({
   const doctors = doctorsData?.data || [];
 
   return (
-    <section className="bg-muted/30 min-h-screen">
-      <div className="section pt-10 pb-16">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold tracking-tight mb-3">
-            Our Doctors
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            Browse our comprehensive list of top-rated specialists for
-            personalized care.
-          </p>
+    <>
+      {!doctorsData?.success ? (
+        <ErrorState message={doctorsData?.message} />
+      ) : doctors.length === 0 ? (
+        <EmptyState
+          title="No Doctors Found"
+          message="We couldn't find any doctors at this time. Please check back later."
+          icon={RiStethoscopeFill}
+        />
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {doctors.map((doctor) => (
+            <DoctorCard key={doctor.id} doctor={doctor} />
+          ))}
         </div>
-
-        {!doctorsData?.success ? (
-          <ErrorState message={doctorsData?.message} />
-        ) : doctors.length === 0 ? (
-          <EmptyState
-            title="No Doctors Found"
-            message="We couldn't find any doctors at this time. Please check back later."
-            icon={RiStethoscopeFill}
-          />
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {doctors.map((doctor) => (
-              <DoctorCard key={doctor.id} doctor={doctor} />
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+      )}
+    </>
   );
 }
