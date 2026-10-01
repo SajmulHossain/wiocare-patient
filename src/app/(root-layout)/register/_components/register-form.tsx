@@ -43,9 +43,7 @@ export const RegisterForm = () => {
       onChange: registerSchema,
     },
     onSubmit: async ({ value }) => {
-      const toastId = toast.loading("Creating account...", {
-        duration: 100000,
-      });
+      const toastId = toast.loading("Creating account...");
       startTransition(async () => {
         const result = await register(value);
         if (result.success) {
@@ -56,6 +54,9 @@ export const RegisterForm = () => {
           setError(result.message);
         }
       });
+      setTimeout(() => {
+        toast.dismiss(toastId);
+      }, 4000);
     },
   });
 
