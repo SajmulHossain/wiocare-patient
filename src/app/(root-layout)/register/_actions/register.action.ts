@@ -4,6 +4,7 @@ import { authFetch } from "@/lib";
 import type { RegisterFormValues } from "../_schema/register.schema";
 import { redirect } from "next/navigation";
 import { catchRedirectError } from "@/lib";
+import { phoneZodSchema } from "@/zod-schema";
 
 export const register = async (data: RegisterFormValues) => {
   try {
@@ -18,7 +19,13 @@ export const register = async (data: RegisterFormValues) => {
     }
 
     if (result.success) {
-      redirect(`/verify/email?email=${encodeURIComponent(data.identifier)}`);
+      const isPhoneNumber = phoneZodSchema.safeParse(data.identifier).success;
+
+      if (isPhoneNumber) {
+        redirect(`/verify/phone?phone=${encodeURIComponent(data.identifier)}`);
+      } else {
+        redirect(`/verify/email?email=${encodeURIComponent(data.identifier)}`);
+      }
     }
 
     return {
