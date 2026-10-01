@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/sheet";
 import Logo from "@/components/shared/logo";
 import { RiMenu2Fill } from "@remixicon/react";
-import ThemeToggler from "./theme-toggler";
+import ThemeToggler from "../theme-toggler";
+import NavbarSideButton from "./navbar-side-button";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -45,12 +46,7 @@ export function Navbar() {
         <div className="flex items-center gap-4">
           <ThemeToggler />
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/login">
-              <Button variant="ghost">Log in</Button>
-            </Link>
-            <Link href="/register">
-              <Button>Get Started</Button>
-            </Link>
+            <NavbarSideButton />
           </div>
 
           {/* Mobile Menu */}
@@ -84,14 +80,7 @@ export function Navbar() {
                 </nav>
                 <div className="flex flex-col space-y-3 mt-auto pr-6">
                   <ThemeToggler />
-                  <Link href="/login" className="w-full">
-                    <Button variant="outline" className="w-full">
-                      Log in
-                    </Button>
-                  </Link>
-                  <Link href="/signup" className="w-full">
-                    <Button className="w-full">Get Started</Button>
-                  </Link>
+                  <NavbarSideButton />
                 </div>
               </div>
             </SheetContent>
