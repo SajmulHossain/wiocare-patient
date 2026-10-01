@@ -1,4 +1,4 @@
-import { publicFetch } from "@/lib/custom-fetch";
+import { publicFetch } from "@/lib";
 import type { IResponse, IDoctorDailyRoster } from "@/types";
 
 export const fetchAvailableSchedules = async (

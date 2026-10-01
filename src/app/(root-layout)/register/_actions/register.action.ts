@@ -1,6 +1,6 @@
 "use server";
 
-import { authFetch } from "@/lib/custom-fetch";
+import { authFetch } from "@/lib";
 import type { RegisterFormValues } from "../_schema/register.schema";
 import { redirect } from "next/navigation";
 import { catchRedirectError } from "@/lib";

@@ -1,16 +1,16 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <acceptable> */
 "use server";
 
 // import cookie from "cookie";
 import { cookies } from "next/headers";
-import envConfig from "@/config/env.config";
+import { envConfig } from "@/config";
 import { verifyToken } from "./jwt";
 import { parseCookie } from "cookie";
 
 export const setCookies = async (cookieHeader: string[]) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let accessToken: any, refreshToken: any, betterAuthToken: any;
 
-  if (cookieHeader && cookieHeader.length) {
+  if (cookieHeader?.length) {
     cookieHeader.forEach((cookies) => {
       const parsedCookie = parseCookie(cookies);
 
@@ -39,7 +39,7 @@ export const setCookies = async (cookieHeader: string[]) => {
   if (accessToken) {
     nextCookie.set("accessToken", accessToken.accessToken, {
       httpOnly: true,
-      maxAge: parseInt(accessToken["Max-Age"]),
+      maxAge: parseInt(accessToken["Max-Age"], 10),
       expires: accessToken.Expires,
       secure: true,
       path: accessToken.Path || "/",
@@ -50,7 +50,7 @@ export const setCookies = async (cookieHeader: string[]) => {
   if (refreshToken) {
     nextCookie.set("refreshToken", refreshToken.refreshToken, {
       httpOnly: true,
-      maxAge: parseInt(refreshToken["Max-Age"]),
+      maxAge: parseInt(refreshToken["Max-Age"], 10),
       expires: refreshToken.Expires,
       secure: true,
       path: refreshToken.Path || "/",
@@ -63,7 +63,7 @@ export const setCookies = async (cookieHeader: string[]) => {
         betterAuthToken["__Secure-cottonsworld.session_token"],
         {
           httpOnly: true,
-          maxAge: parseInt(betterAuthToken["Max-Age"]),
+          maxAge: parseInt(betterAuthToken["Max-Age"], 10),
           expires: betterAuthToken.Expires,
           secure: true,
           path: betterAuthToken.Path || "/",

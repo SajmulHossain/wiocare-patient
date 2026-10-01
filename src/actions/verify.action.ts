@@ -1,7 +1,7 @@
 "use server";
 
-import { setCookies } from "@/lib/cookie";
-import { authFetch } from "@/lib/custom-fetch";
+import { setCookies } from "@/lib";
+import { authFetch } from "@/lib";
 
 export const sendVerificationEmail = async (data: { email: string }) => {
   try {

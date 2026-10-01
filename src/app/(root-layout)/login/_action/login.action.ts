@@ -1,12 +1,12 @@
 "use server";
 
-import { authFetch } from "@/lib/custom-fetch";
-import { setCookies } from "@/lib/cookie";
+import { authFetch } from "@/lib";
+import { setCookies } from "@/lib";
 import type { LoginFormValues } from "../_schema/login.schema";
 import { Roles } from "@/types";
 import { redirect } from "next/navigation";
 import { sendVerificationEmail } from "@/actions/verify.action";
-import { catchRedirectError } from "@/lib/catchRedirectError";
+import { catchRedirectError } from "@/lib";
 
 export const loginAction = async (data: LoginFormValues) => {
   try {

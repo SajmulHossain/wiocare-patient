@@ -7,7 +7,7 @@ import {
   PaginationContent,
   PaginationItem,
 } from "@/components/ui/pagination";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import type { IMeta } from "@/types";
 import { Spinner } from "@/components/ui/spinner";
 import { RiArrowLeftLine, RiArrowRightLine } from "@remixicon/react";

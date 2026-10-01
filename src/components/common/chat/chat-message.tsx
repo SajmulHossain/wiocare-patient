@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getNameInitialCharacter } from "@/lib/getNameInitChar";
+import { getNameInitialCharacter } from "@/lib";
 import Image from "next/image";
 import { RiFileTextFill } from "@remixicon/react";
 

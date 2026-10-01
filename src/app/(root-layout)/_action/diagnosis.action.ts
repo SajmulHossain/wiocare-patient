@@ -1,6 +1,6 @@
-import { publicFetch } from "@/lib/custom-fetch";
+import { publicFetch } from "@/lib";
 import type { IResponse, IGlobalMedicalTest, QueryType } from "@/types";
-import { getQueryString } from "@/lib/utils";
+import { getQueryString } from "@/lib";
 
 export const fetchMedicalTests = async (
   params: QueryType,

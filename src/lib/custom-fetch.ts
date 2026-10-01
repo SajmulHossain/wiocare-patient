@@ -1,4 +1,4 @@
-import envConfig from "@/config/env.config";
+import { envConfig } from "@/config";
 import { getCookies } from "./cookie";
 
 const api_endpoint =

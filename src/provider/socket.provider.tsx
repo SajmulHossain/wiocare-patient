@@ -1,7 +1,7 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { socket } from "@/config/socket.config";
+import { createContext, useContext, useEffect, useState } from "react";
+import { socket } from "@/config";
 import { toast } from "sonner";
 
 interface SocketContextType {

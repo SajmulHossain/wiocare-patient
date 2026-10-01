@@ -18,4 +18,4 @@ const loadEnv = (): IEnv => {
   };
 };
 
-export default loadEnv();
+export const envConfig = loadEnv();

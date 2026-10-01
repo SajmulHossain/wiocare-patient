@@ -1,7 +1,7 @@
 "use client";
 
 import { Poppins, Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 import { GlobalErrorSection } from "./_section/global-error-section";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });

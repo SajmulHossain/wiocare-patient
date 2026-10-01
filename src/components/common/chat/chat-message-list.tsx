@@ -9,7 +9,7 @@ import {
   MessageScrollerButton,
 } from "@/components/ui/message-scroller";
 import { ChatMessage, type ChatMessageProps } from "./chat-message";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 
 interface ChatMessageListProps {
   messages: ChatMessageProps[];

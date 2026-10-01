@@ -1,4 +1,4 @@
-import envConfig from "@/config/env.config";
+import { envConfig } from "@/config";
 import type { ClientToServerEvents, ServerToClientEvents } from "@/types";
 import { io, type Socket } from "socket.io-client";
 

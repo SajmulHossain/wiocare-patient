@@ -8,7 +8,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { getNameInitialCharacter } from "@/lib/getNameInitChar";
+import { getNameInitialCharacter } from "@/lib";
 import {
   RiCalendar2Fill,
   RiKnifeBloodFill,

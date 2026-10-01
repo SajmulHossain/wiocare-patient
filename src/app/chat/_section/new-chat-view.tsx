@@ -10,7 +10,7 @@ import type { ChatMessageProps } from "@/components/common/chat";
 import Image from "next/image";
 import wioChatLogo from "@/assets/images/icons/wio-chat.png";
 import { motion, AnimatePresence } from "motion/react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
 
 export function NewChatView() {
   const [messages, setMessages] = useState<ChatMessageProps[]>([]);

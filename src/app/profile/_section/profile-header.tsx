@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getNameInitialCharacter } from "@/lib/getNameInitChar";
+import { getNameInitialCharacter } from "@/lib";
 import type { IUser } from "@/types";
 import { RiShieldKeyholeLine, RiCamera3Line } from "@remixicon/react";
 

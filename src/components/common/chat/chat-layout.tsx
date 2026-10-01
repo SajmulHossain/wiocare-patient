@@ -1,8 +1,8 @@
-import type React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib";
+import type { ReactNode } from "react";
 
 interface ChatLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
