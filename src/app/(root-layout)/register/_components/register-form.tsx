@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -29,6 +29,7 @@ import { register } from "../_actions/register.action";
 export const RegisterForm = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const form = useForm({
     defaultValues: {
@@ -42,7 +43,9 @@ export const RegisterForm = () => {
       onChange: registerSchema,
     },
     onSubmit: async ({ value }) => {
-      const toastId = toast.loading("Creating account...");
+      const toastId = toast.loading("Creating account...", {
+        duration: 100000,
+      });
       startTransition(async () => {
         const result = await register(value);
         if (result.success) {
@@ -50,6 +53,7 @@ export const RegisterForm = () => {
           router.push("/dashboard");
         } else {
           toast.error(result.message, { id: toastId });
+          setError(result.message);
         }
       });
     },
@@ -71,6 +75,11 @@ export const RegisterForm = () => {
         className="flex flex-col"
       >
         <CardContent className="grid gap-6">
+          {error && (
+            <div className="w-full bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md mb-4">
+              {error}
+            </div>
+          )}
           <form.Field
             name="name"
             children={(field) => {
