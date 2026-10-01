@@ -28,7 +28,7 @@ export default function DiagnosisFilter() {
     [searchParams],
   );
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = (e: React.SyntheticEvent) => {
     e.preventDefault();
     router.push(`${pathname}?${createQueryString("search", searchTerm)}`);
   };
@@ -53,6 +53,7 @@ export default function DiagnosisFilter() {
           <Button
             className="h-12 px-6 rounded-xl md:w-auto w-24"
             onClick={handleSearch}
+            variant={"secondary"}
           >
             Search
           </Button>

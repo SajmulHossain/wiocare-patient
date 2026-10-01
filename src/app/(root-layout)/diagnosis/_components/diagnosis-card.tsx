@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { RiTestTubeFill, RiArrowRightLine } from "@remixicon/react";
+import { RiArrowRightLine, RiTestTubeFill } from "@remixicon/react";
 import type { IGlobalMedicalTest } from "@/types";
 import { Badge } from "@/components/ui/badge";
 
@@ -14,8 +14,8 @@ export default function DiagnosisCard({ test }: DiagnosisCardProps) {
         <div className="absolute top-0 left-0 w-1 h-full bg-primary/20 group-hover:bg-primary transition-colors duration-300" />
 
         <div className="flex justify-between items-start mb-4">
-          <div className="bg-primary/10 p-3 rounded-xl text-primary">
-            <RiTestTubeFill className="h-6 w-6" />
+          <div className="bg-primary/90 p-3 rounded-xl">
+            <RiTestTubeFill className="text-white" />
           </div>
           {test.sampleType && (
             <Badge variant="outline" className="bg-background">
