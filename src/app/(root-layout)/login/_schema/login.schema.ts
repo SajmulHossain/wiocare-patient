@@ -1,4 +1,4 @@
-import { phoneZodSchema } from "@/app/profile/_schema/profile.schema";
+import { phoneZodSchema } from "@/zod-schema";
 import { z } from "zod";
 
 export const loginSchema = z.object({

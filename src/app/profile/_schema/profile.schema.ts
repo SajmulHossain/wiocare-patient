@@ -1,12 +1,6 @@
 import { Gender } from "@/types";
+import { phoneZodSchema } from "@/zod-schema";
 import z from "zod";
-
-export const phoneZodSchema = z
-  .string({ error: "Contact phone is required" })
-  .trim()
-  .regex(/^(?:\+88|88)?(01[3-9]\d{8})$/, {
-    error: "Invalid Bangladeshi phone number format",
-  });
 
 export const profileSchema = z.object({
   email: z.email("Please enter a valid email address.").optional(),
