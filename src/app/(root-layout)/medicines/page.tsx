@@ -22,7 +22,13 @@ export default function MedicinesPage({
           </p>
         </div>
 
-        <MedicineFilters />
+        <Suspense
+          fallback={
+            <div className="h-18 w-full animate-pulse bg-card/60 backdrop-blur-sm rounded-3xl mb-8"></div>
+          }
+        >
+          <MedicineFilters />
+        </Suspense>
 
         <Suspense fallback={<MedicinesSkeleton />}>
           <AllMedicines params={params} searchParams={searchParams} />

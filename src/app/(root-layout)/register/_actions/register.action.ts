@@ -2,7 +2,6 @@
 
 import { authFetch } from "@/lib/custom-fetch";
 import type { RegisterFormValues } from "../_schema/register.schema";
-import { setCookies } from "@/lib/cookie";
 
 export const register = async (data: RegisterFormValues) => {
   try {
@@ -13,16 +12,7 @@ export const register = async (data: RegisterFormValues) => {
     const result = await res.json();
 
     if (!res.ok) {
-      return {
-        success: false,
-        message: result.message || "Failed to register",
-      };
-    }
-
-    // Parse and set cookies from the response headers
-    const setCookieHeader = res.headers.getSetCookie();
-    if (setCookieHeader && setCookieHeader.length > 0) {
-      await setCookies(setCookieHeader);
+      throw new Error(result.message);
     }
 
     return {

@@ -3,7 +3,7 @@ import { phoneZodSchema } from "@/app/profile/_schema/profile.schema";
 
 export const registerSchema = z
   .object({
-    fullName: z.string().min(2, "Full name must be at least 2 characters"),
+    name: z.string().min(2, "Full name must be at least 2 characters"),
     identifier: z.union(
       [z.email({ error: "Invalid email address" }), phoneZodSchema],
       {

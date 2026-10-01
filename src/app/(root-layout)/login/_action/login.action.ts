@@ -4,6 +4,9 @@ import { authFetch } from "@/lib/custom-fetch";
 import { setCookies } from "@/lib/cookie";
 import type { LoginFormValues } from "../_schema/login.schema";
 import { Roles } from "@/types";
+import { redirect } from "next/navigation";
+import { sendVerificationEmail } from "@/actions/verify.action";
+import { catchRedirectError } from "@/lib/catchRedirectError";
 
 export const loginAction = async (data: LoginFormValues) => {
   try {
@@ -12,6 +15,11 @@ export const loginAction = async (data: LoginFormValues) => {
     });
 
     const result = await response.json();
+
+    if (result.code === "EMAIL_NOT_VERIFIED") {
+      await sendVerificationEmail({ email: data.identifier });
+      redirect(`/verify/email?email=${encodeURIComponent(data.identifier)}`);
+    }
 
     if (!response.ok) {
       return { success: false, message: result.message || "Failed to login" };
@@ -29,6 +37,7 @@ export const loginAction = async (data: LoginFormValues) => {
       data: result.data,
     };
   } catch (error) {
+    catchRedirectError(error);
     return {
       success: false,
       message:

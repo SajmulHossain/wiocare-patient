@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useTransition, useState, useEffect } from "react";
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import Link from "next/link";
@@ -43,6 +43,20 @@ export const OtpVerification = ({
 }: OtpVerificationProps) => {
   const [isVerifying, startTransition] = useTransition();
   const [isResending, startResendTransition] = useTransition();
+  const [countdown, setCountdown] = useState(60);
+  const [canResend, setCanResend] = useState(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (countdown > 0 && !canResend) {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    } else if (countdown === 0) {
+      setCanResend(true);
+    }
+    return () => clearInterval(timer);
+  }, [countdown, canResend]);
 
   const otpSchema = z.object({
     otp: z.string().length(length, `OTP must be exactly ${length} digits`),
@@ -63,9 +77,11 @@ export const OtpVerification = ({
   });
 
   const handleResend = () => {
-    if (onResend) {
+    if (onResend && canResend) {
       startResendTransition(async () => {
         await onResend();
+        setCountdown(60);
+        setCanResend(false);
       });
     }
   };
@@ -143,10 +159,10 @@ export const OtpVerification = ({
                 <button
                   type="button"
                   onClick={handleResend}
-                  disabled={isResending}
+                  disabled={!canResend || isResending}
                   className="text-foreground font-medium hover:underline underline-offset-4 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isResending ? "Resending..." : "Resend OTP"}
+                  {isResending ? "Resending..." : canResend ? "Resend OTP" : `Resend in ${countdown}s`}
                 </button>
               </p>
             )}

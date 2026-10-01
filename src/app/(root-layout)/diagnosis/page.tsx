@@ -16,12 +16,19 @@ export default function DiagnosisPage({
             Medical Tests & Diagnosis
           </h1>
           <p className="text-muted-foreground text-lg">
-            Explore our comprehensive directory of medical tests. Filter and search 
-            to find detailed information about various diagnostic procedures.
+            Explore our comprehensive directory of medical tests. Filter and
+            search to find detailed information about various diagnostic
+            procedures.
           </p>
         </div>
 
-        <DiagnosisFilter />
+        <Suspense
+          fallback={
+            <div className="h-24 w-full animate-pulse bg-background rounded-2xl mb-8"></div>
+          }
+        >
+          <DiagnosisFilter />
+        </Suspense>
 
         <Suspense fallback={<DiagnosisSkeleton />}>
           <AllDiagnosis params={params} searchParams={searchParams} />

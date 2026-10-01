@@ -1,38 +1,61 @@
 "use client";
 
+import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { OtpVerification } from "@/components/shared/otp-verification";
+import { verifyEmail, sendVerificationEmail } from "@/actions/verify.action";
 
-export const EmailVerifySection = () => {
+export const EmailVerifySection = ({ email }: { email: string }) => {
   const router = useRouter();
+  const [_isPending, startTransition] = useTransition();
 
   const handleVerify = async (otp: string) => {
-    // TODO: Implement actual email verification API call here
-    console.log("Verifying email OTP:", otp);
-    
-    // Simulating API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    toast.success("Email verified successfully!");
-    router.push("/dashboard");
+    if (!email) {
+      toast.error("Email is missing. Please log in again.");
+      router.push("/login");
+      return;
+    }
+
+    const toastId = toast.loading("Verifying your email...");
+    startTransition(async () => {
+      const result = await verifyEmail({ email, otp });
+      if (result.success) {
+        toast.success(result.message, { id: toastId });
+        router.push("/dashboard");
+      } else {
+        toast.error(result.message, { id: toastId });
+      }
+    });
   };
 
   const handleResend = async () => {
-    // TODO: Implement actual resend OTP API call here
-    console.log("Resending email OTP");
-    
-    // Simulating API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    toast.success("A new OTP has been sent to your email.");
+    if (!email) {
+      toast.error("Email is missing. Please log in again.");
+      router.push("/login");
+      return;
+    }
+
+    const toastId = toast.loading("Sending new OTP...");
+    startTransition(async () => {
+      const result = await sendVerificationEmail({ email });
+      if (result.success) {
+        toast.success(result.message, { id: toastId });
+      } else {
+        toast.error(result.message, { id: toastId });
+      }
+    });
   };
 
   return (
     <div className="flex min-h-[calc(100vh-200px)] items-center justify-center py-10">
       <OtpVerification
         title="Verify Email"
-        description="Enter the 6-digit code sent to your email address."
+        description={
+          email
+            ? `Enter the 6-digit code sent to ${email}`
+            : "Enter the 6-digit code sent to your email address."
+        }
         length={6}
         onVerify={handleVerify}
         onResend={handleResend}

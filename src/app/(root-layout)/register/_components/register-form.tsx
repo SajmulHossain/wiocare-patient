@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useTransition } from "react";
 import { useForm } from "@tanstack/react-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type RegisterFormValues, registerSchema } from "../_schema/register.schema";
+import {
+  type RegisterFormValues,
+  registerSchema,
+} from "../_schema/register.schema";
 
 import {
   Card,
@@ -21,14 +24,15 @@ import { Field, FieldLabel, FieldError } from "@/components/ui/field";
 
 import { RiLoader4Line } from "@remixicon/react";
 import { toast } from "sonner";
+import { register } from "../_actions/register.action";
 
 export const RegisterForm = () => {
-  const [isSaving, setIsSaving] = useState(false);
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const form = useForm({
     defaultValues: {
-      fullName: "",
+      name: "",
       identifier: "",
       password: "",
       confirmPassword: "",
@@ -38,13 +42,16 @@ export const RegisterForm = () => {
       onChange: registerSchema,
     },
     onSubmit: async ({ value }) => {
-      setIsSaving(true);
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      toast.success("Account created successfully!");
-      console.log("Register data:", value);
-      setIsSaving(false);
-      router.push("/dashboard");
+      const toastId = toast.loading("Creating account...");
+      startTransition(async () => {
+        const result = await register(value);
+        if (result.success) {
+          toast.success("Account created successfully!", { id: toastId });
+          router.push("/dashboard");
+        } else {
+          toast.error(result.message, { id: toastId });
+        }
+      });
     },
   });
 
@@ -65,7 +72,7 @@ export const RegisterForm = () => {
       >
         <CardContent className="grid gap-6">
           <form.Field
-            name="fullName"
+            name="name"
             children={(field) => {
               const isInvalid =
                 field.state.meta.isTouched && !field.state.meta.isValid;
@@ -182,10 +189,10 @@ export const RegisterForm = () => {
               children={([canSubmit, isSubmitting]) => (
                 <Button
                   type="submit"
-                  disabled={!canSubmit || isSaving || isSubmitting}
+                  disabled={!canSubmit || isPending || isSubmitting}
                   className="w-full font-medium"
                 >
-                  {isSaving || isSubmitting ? (
+                  {isPending || isSubmitting ? (
                     <RiLoader4Line className="h-5 w-5 animate-spin mr-2" />
                   ) : null}
                   Create Account

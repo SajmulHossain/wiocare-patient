@@ -11,11 +11,7 @@ const DashboardPage = () => {
         <EmptyState
           icon={RiNotification2Fill}
           title="Notifications"
-          description="You are all caught up!"
-          actionLabel="Refresh"
-          actionHref="/dashboard"
-          type="success"
-          className="w-125"
+          message="You are all caught up!"
         />
       </div>
       <ChatSection />
