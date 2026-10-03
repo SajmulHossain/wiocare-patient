@@ -1,8 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { RiMedicineBottleFill, RiShoppingCart2Line } from "@remixicon/react";
+import { RiMedicineBottleFill, RiAddLine } from "@remixicon/react";
 import type { IMedicine } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
@@ -10,82 +7,78 @@ interface MedicineCardProps {
   medicine: IMedicine;
 }
 
+const PASTEL_COLORS = [
+  "bg-[#f0f9f6]", // light green
+  "bg-[#fcf5eb]", // light orange/beige
+  "bg-[#eff4fb]", // light blue
+  "bg-[#f9eff4]", // light pink
+];
+
 export function MedicineCard({ medicine }: MedicineCardProps) {
   // Use a placeholder if no image exists
   const imageUrl = medicine.imageUrls?.[0];
 
-  return (
-    <div className="group flex flex-col rounded-2xl border border-border/50 bg-card text-card-foreground shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 overflow-hidden relative">
-      {medicine.discountPercentage && medicine.discountPercentage > 0 && (
-        <Badge
-          variant="destructive"
-          className="absolute top-3 left-3 z-10 shadow-sm font-semibold rounded-full px-2 py-0.5 text-xs"
-        >
-          {medicine.discountPercentage}% OFF
-        </Badge>
-      )}
+  // Pick a stable pastel background color based on medicine ID
+  const bgColor =
+    PASTEL_COLORS[
+      medicine.id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) %
+        PASTEL_COLORS.length
+    ];
 
-      <div className="relative h-48 w-full bg-slate-50/50 dark:bg-slate-900/50 p-4 flex items-center justify-center overflow-hidden">
+  return (
+    <div className="group flex flex-col rounded-[24px] border border-border/40 bg-background p-3 shadow-sm transition-all duration-300 hover:border-primary/30 hover:shadow-md">
+      <div
+        className={`relative flex h-40 w-full items-center justify-center overflow-hidden rounded-2xl ${bgColor} p-4`}
+      >
         <Link
           href={`/medicines/${medicine.slug}`}
-          className="relative h-full w-full block group-hover:scale-105 transition-transform duration-500"
+          className="relative block h-full w-full transition-transform duration-500 group-hover:scale-105"
         >
-          <Avatar className="w-full h-full">
-            <AvatarImage src={imageUrl} />
-            <AvatarFallback>
-              <RiMedicineBottleFill className="w-10 h-10 text-primary" />
+          <Avatar className="h-full w-full rounded-none">
+            <AvatarImage
+              src={imageUrl || undefined}
+              className="object-contain"
+            />
+            <AvatarFallback className="bg-transparent">
+              <RiMedicineBottleFill className="h-10 w-10 text-primary/40" />
             </AvatarFallback>
           </Avatar>
         </Link>
       </div>
 
-      <div className="p-5 flex flex-col grow gap-2">
-        <div className="flex justify-between items-start gap-2">
-          <Link href={`/medicines/${medicine.slug}`}>
-            <h3 className="font-semibold text-base md:text-lg line-clamp-1 hover:text-primary transition-colors">
-              {medicine.name}{" "}
-              <span className="text-xs md:text-sm font-normal text-muted-foreground">
-                {medicine.strength}
-              </span>
-            </h3>
-          </Link>
-        </div>
-
-        <p className="text-xs md:text-sm text-muted-foreground line-clamp-1">
-          {medicine.generic?.name || "Generic"}
+      <div className="flex grow flex-col px-1 pb-1 pt-4">
+        <p className="mb-1 text-[11px] text-muted-foreground line-clamp-1">
+          {medicine.generic?.name || "Healthcare"}
         </p>
 
-        <p className="text-xs text-muted-foreground line-clamp-1 opacity-70">
-          {medicine.manufacturer?.name || "Manufacturer"}
+        <Link href={`/medicines/${medicine.slug}`}>
+          <h3 className="line-clamp-1 text-[17px] font-semibold leading-tight text-foreground transition-colors hover:text-primary">
+            {medicine.name}
+          </h3>
+        </Link>
+
+        <p className="mt-1 text-[12px] text-muted-foreground line-clamp-1">
+          {medicine.strength || "Standard Pack"}
         </p>
 
-        <div className="mt-auto pt-4 flex items-center justify-between border-t border-border/50">
-          <div className="flex flex-col">
-            {medicine.discountPrice ? (
-              <>
-                <span className="text-base md:text-lg font-bold text-primary">
-                  ৳{medicine.discountPrice}
-                </span>
-                <span className="text-[10px] md:text-xs text-muted-foreground line-through">
-                  ৳{medicine.mrp}
-                </span>
-              </>
-            ) : (
-              <span className="text-base md:text-lg font-bold text-primary">
+        <div className="mb-1 mt-auto flex items-end justify-between pt-4">
+          <div className="flex items-center gap-2">
+            <span className="text-[17px] font-bold text-foreground">
+              ৳{medicine.discountPrice || medicine.mrp}
+            </span>
+            {medicine.discountPrice && (
+              <span className="text-[12px] text-muted-foreground line-through">
                 ৳{medicine.mrp}
               </span>
             )}
           </div>
 
-          <Button
-            size="sm"
-            className="rounded-full h-8 md:h-9 px-3 md:px-4 gap-1.5 shadow-sm hover:shadow hover:bg-primary/90 transition-all"
+          <button
+            type="button"
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background text-primary transition-colors hover:border-primary hover:bg-primary/5"
           >
-            <RiShoppingCart2Line className="w-3.5 h-3.5 md:w-4 md:h-4" />
-            <span className="hidden sm:inline-block text-xs md:text-sm">
-              Add
-            </span>
-          </Button>
+            <RiAddLine className="h-5 w-5" />
+          </button>
         </div>
       </div>
     </div>
