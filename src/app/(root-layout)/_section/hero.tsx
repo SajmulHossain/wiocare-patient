@@ -35,8 +35,13 @@ const banners = [
 
 export default function Hero() {
   const [api, setApi] = useState<CarouselApi>();
-  const [count, setcount] = useState(0);
-  const [current, setCurrent] = useState(0);
+  const [count, setcount] = useState(banners.length);
+  const [current, setCurrent] = useState(1);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!api) return;
@@ -57,7 +62,10 @@ export default function Hero() {
         }}
         plugins={[Autoplay({ delay: 3000 })]}
         setApi={setApi}
-        className="rounded-xl overflow-hidden"
+        className={cn(
+          "rounded-xl overflow-hidden transition-opacity duration-700 ease-out",
+          !isMounted ? "opacity-0" : "opacity-100",
+        )}
       >
         <CarouselContent>
           {banners.map((banner) => (
@@ -75,7 +83,12 @@ export default function Hero() {
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="mx-auto mt-6 flex w-fit items-center justify-center gap-2">
+      <div
+        className={cn(
+          "mx-auto mt-6 flex w-fit items-center justify-center gap-2 transition-opacity duration-700 ease-out",
+          isMounted ? "opacity-100" : "opacity-0",
+        )}
+      >
         {Array.from({ length: count }, (_, index) => {
           const isCurrent = index + 1 === current;
 

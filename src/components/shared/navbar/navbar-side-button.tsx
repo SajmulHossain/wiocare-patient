@@ -11,8 +11,8 @@ const NavbarSideButton = () => {
   if (!data?.user && isPending) {
     return (
       <div className="hidden md:flex items-center gap-4">
-        <Skeleton className="w-20 h-9"></Skeleton>
-        <Skeleton className="w-20 h-9"></Skeleton>
+        <Skeleton className="w-16 h-6"></Skeleton>
+        <Skeleton className="w-20 h-6"></Skeleton>
       </div>
     );
   }
