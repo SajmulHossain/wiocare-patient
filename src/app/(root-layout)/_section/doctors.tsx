@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { RiStethoscopeFill } from "@remixicon/react";
+import { RiStethoscopeFill, RiArrowRightLine } from "@remixicon/react";
 import Link from "next/link";
 import { fetchDoctors } from "../_action/doctor.action";
 import ErrorState from "@/components/common/error-state";
@@ -12,24 +12,28 @@ export default async function Doctors() {
   const doctors = doctorsData.data || [];
 
   return (
-    <section id="doctors" className="bg-muted/30">
+    <section id="doctors" className="py-16 md:py-24">
       <div className="section">
-        <div className="flex justify-between items-end mb-10">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold tracking-tight mb-3">
-              Book an Appointment
+        <div className="mb-12 flex items-end justify-between">
+          <div className="max-w-3xl">
+            <h4 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-primary">
+              Trusted Professionals
+            </h4>
+            <h2 className="mb-4 text-4xl font-light text-foreground md:text-5xl">
+              Find the right <span className="font-medium text-primary">doctor for you.</span>
             </h2>
-            <p className="text-muted-foreground text-lg">
-              Consult with Bangladesh's top-rated specialists for personalized
-              care.
+            <p className="text-lg text-muted-foreground">
+              Search trusted doctors by specialty, experience or healthcare need.
             </p>
           </div>
           <Button
             variant="outline"
             asChild
-            className="hidden sm:inline-flex rounded-full px-6"
+            className="hidden rounded-full border-border px-6 sm:inline-flex"
           >
-            <Link href="/doctors">View All Doctors</Link>
+            <Link href="/doctors">
+              View All Doctors <RiArrowRightLine className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
         </div>
 
@@ -50,8 +54,10 @@ export default async function Doctors() {
         )}
 
         <div className="mt-8 text-center sm:hidden">
-          <Button variant="outline" asChild className="w-full rounded-full">
-            <Link href="/doctors">View All Doctors</Link>
+          <Button variant="outline" asChild className="w-full rounded-full border-border">
+            <Link href="/doctors">
+              View All Doctors <RiArrowRightLine className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </div>
