@@ -13,7 +13,7 @@ export default function DoctorsPage({
       <div className="section">
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Left Sidebar Filter */}
-          <div className="w-full shrink-0 lg:w-70">
+          <div className="w-full shrink-0 lg:w-70 lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto scrollbar-hide">
             <Suspense
               fallback={
                 <div className="h-96 w-full animate-pulse rounded-2xl bg-background border border-border shadow-sm"></div>
