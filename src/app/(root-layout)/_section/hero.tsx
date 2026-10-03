@@ -1,77 +1,100 @@
-import Link from "next/link";
+"use client";
+
 import {
-  RiCalendarCheckLine,
-  RiMicroscopeLine,
-  RiMedicineBottleLine,
-} from "@remixicon/react";
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import img1 from "@/assets/images/banner/banner_img1.png";
+import img2 from "@/assets/images/banner/banner_img2.png";
+import img3 from "@/assets/images/banner/banner_img3.png";
+
+import Autoplay from "embla-carousel-autoplay";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { cn } from "cn";
+
+const banners = [
+  {
+    title: "Banner image 1",
+    image: img1,
+    redirect: "/",
+  },
+  {
+    title: "Banner image 2",
+    image: img2,
+    redirect: "/",
+  },
+  {
+    title: "Banner image 3",
+    image: img3,
+    redirect: "/doctors",
+  },
+];
 
 export default function Hero() {
+  const [api, setApi] = useState<CarouselApi>();
+  const [count, setcount] = useState(0);
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (!api) return;
+
+    setcount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
   return (
-    <section className="relative overflow-hidden bg-background pt-16 pb-24">
-      {/* Decorative background elements */}
-      <div
-        className="absolute top-0 left-1/2 w-full -translate-x-1/2 overflow-hidden blur-3xl pointer-events-none"
-        aria-hidden="true"
+    <section className="section py-4">
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+        plugins={[Autoplay({ delay: 3000 })]}
+        setApi={setApi}
+        className="rounded-xl overflow-hidden"
       >
-        <div className="relative aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary to-blue-400 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
-      </div>
-
-      <div className="section relative">
-        <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-foreground mb-6">
-            Your Comprehensive Healthcare <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">
-              Just a Click Away
-            </span>
-          </h1>
-
-          <p className="mt-4 text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Book appointments with top doctors, order medicines online, and
-            schedule lab tests from the comfort of your home.
-          </p>
-
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {/* Action Cards inside Hero */}
-            <Link
-              href="#doctors"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-2xl shadow-sm hover:shadow-md hover:border-primary/50 transition-all"
-            >
-              <div className="w-16 h-16 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <RiCalendarCheckLine className="w-8 h-8" />
+        <CarouselContent>
+          {banners.map((banner) => (
+            <CarouselItem key={banner.title}>
+              <div className="relative w-full">
+                <Image
+                  src={banner.image}
+                  height={300}
+                  width={800}
+                  alt={banner.title}
+                  className="object-cover w-full h-full"
+                />
               </div>
-              <h3 className="font-semibold text-lg mb-1">Book Appointment</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Consult with top specialists
-              </p>
-            </Link>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+      <div className="mx-auto mt-6 flex w-fit items-center justify-center gap-2">
+        {Array.from({ length: count }, (_, index) => {
+          const isCurrent = index + 1 === current;
 
-            <Link
-              href="#medical-tests"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-2xl shadow-sm hover:shadow-md hover:border-primary/50 transition-all"
-            >
-              <div className="w-16 h-16 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <RiMicroscopeLine className="w-8 h-8" />
-              </div>
-              <h3 className="font-semibold text-lg mb-1">Book Lab Tests</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Home sample collection
-              </p>
-            </Link>
-
-            <Link
-              href="#medicines"
-              className="group flex flex-col items-center justify-center p-6 bg-card border rounded-2xl shadow-sm hover:shadow-md hover:border-primary/50 transition-all"
-            >
-              <div className="w-16 h-16 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <RiMedicineBottleLine className="w-8 h-8" />
-              </div>
-              <h3 className="font-semibold text-lg mb-1">Order Medicines</h3>
-              <p className="text-sm text-muted-foreground text-center">
-                Guaranteed genuine medicines
-              </p>
-            </Link>
-          </div>
-        </div>
+          return (
+            <button
+              type="button"
+              key={index}
+              onClick={() => api?.scrollTo(index)}
+              className={cn(
+                "relative flex h-3 items-center justify-center rounded-full transition-all duration-500 ease-out",
+                isCurrent
+                  ? "w-16 bg-primary shadow-md shadow-primary/25"
+                  : "w-6 bg-primary/20 hover:scale-110 hover:bg-primary/40",
+              )}
+              aria-label={`Go to slide ${index + 1}`}
+              aria-current={isCurrent}
+            />
+          );
+        })}
       </div>
     </section>
   );
