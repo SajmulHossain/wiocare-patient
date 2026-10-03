@@ -26,7 +26,7 @@ export function Navbar() {
       <div className="section py-3 flex h-16 items-center justify-between relative">
         {/* Left: Logo */}
         <div className="flex items-center">
-          <Logo show={true} />
+          <Logo show />
         </div>
 
         {/* Center: Desktop Links */}
