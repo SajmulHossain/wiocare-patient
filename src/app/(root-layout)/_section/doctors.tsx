@@ -12,7 +12,7 @@ export default async function Doctors() {
   const doctors = doctorsData.data || [];
 
   return (
-    <section id="doctors" className="py-16 md:py-24">
+    <section id="doctors">
       <div className="section">
         <div className="mb-12 flex items-end justify-between">
           <div className="max-w-3xl">
@@ -20,10 +20,12 @@ export default async function Doctors() {
               Trusted Professionals
             </h4>
             <h2 className="mb-4 text-4xl font-light text-foreground md:text-5xl">
-              Find the right <span className="font-medium text-primary">doctor for you.</span>
+              Find the right{" "}
+              <span className="font-medium text-primary">doctor for you.</span>
             </h2>
             <p className="text-lg text-muted-foreground">
-              Search trusted doctors by specialty, experience or healthcare need.
+              Search trusted doctors by specialty, experience or healthcare
+              need.
             </p>
           </div>
           <Button
@@ -54,7 +56,11 @@ export default async function Doctors() {
         )}
 
         <div className="mt-8 text-center sm:hidden">
-          <Button variant="outline" asChild className="w-full rounded-full border-border">
+          <Button
+            variant="outline"
+            asChild
+            className="w-full rounded-full border-border"
+          >
             <Link href="/doctors">
               View All Doctors <RiArrowRightLine className="ml-2 h-4 w-4" />
             </Link>
