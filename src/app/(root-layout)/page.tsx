@@ -1,5 +1,6 @@
 import Hero from "./_section/hero";
 import Services from "./_section/services";
+import Ecosystem from "./_section/ecosystem";
 import Doctors from "./_section/doctors";
 import MedicalTests from "./_section/medical-tests";
 import Medicines from "./_section/medicines";
@@ -10,6 +11,7 @@ export default function Home() {
     <>
       <Hero />
       <Services />
+      <Ecosystem />
       <Doctors />
       <MedicalTests />
       <Medicines />
