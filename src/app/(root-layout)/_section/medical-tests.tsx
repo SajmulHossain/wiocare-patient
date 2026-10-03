@@ -4,6 +4,7 @@ import Link from "next/link";
 import DiagnosisCard from "@/components/common/diagnosis-card";
 import DiagnosisCategories from "@/components/common/diagnosis-categories";
 import { MEDICAL_TESTS_DATA } from "../_constant/medical-tests";
+import { Suspense } from "react";
 
 export default function MedicalTests() {
   return (
@@ -33,7 +34,13 @@ export default function MedicalTests() {
           </Button>
         </div>
 
-        <DiagnosisCategories />
+        <Suspense
+          fallback={
+            <div className="h-14 w-full animate-pulse rounded-2xl bg-muted/60 mb-6" />
+          }
+        >
+          <DiagnosisCategories />
+        </Suspense>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {MEDICAL_TESTS_DATA.map((test, idx) => (

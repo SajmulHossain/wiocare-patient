@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 
 export default function AvailableTodaySkeleton() {
   return (
-    <div className="mb-8 rounded-3xl bg-[#eef9fb] p-5 md:p-8 dark:bg-[#1a2c32]/50 animate-pulse">
+    <div className="mb-8 rounded-3xl bg-primary/10 p-5 md:p-8 dark:bg-[#1a2c32]/50 animate-pulse">
       {/* Header Skeleton */}
       <div className="mb-6 flex items-center justify-between">
         <div className="flex flex-col">

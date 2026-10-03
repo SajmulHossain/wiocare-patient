@@ -6,6 +6,7 @@ import ErrorState from "@/components/common/error-state";
 import EmptyState from "@/components/common/empty-state";
 import { DoctorCard } from "@/components/common/doctor-card";
 import DoctorFilter from "@/components/common/doctor-filter";
+import { Suspense } from "react";
 
 export default async function Doctors() {
   const doctorsData = await fetchDoctors({ limit: 4 });
@@ -40,7 +41,13 @@ export default async function Doctors() {
           </Button>
         </div>
 
-        <DoctorFilter />
+        <Suspense
+          fallback={
+            <div className="h-20 w-full animate-pulse rounded-2xl bg-muted/60" />
+          }
+        >
+          <DoctorFilter />
+        </Suspense>
 
         {!doctorsData.success ? (
           <ErrorState message={doctorsData.message} />
