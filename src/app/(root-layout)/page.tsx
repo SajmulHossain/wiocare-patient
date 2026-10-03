@@ -1,4 +1,5 @@
 import Hero from "./_section/hero";
+import Services from "./_section/services";
 import Doctors from "./_section/doctors";
 import MedicalTests from "./_section/medical-tests";
 import Medicines from "./_section/medicines";
@@ -8,6 +9,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Services />
       <Doctors />
       <MedicalTests />
       <Medicines />
