@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import AllDoctors from "./_section/all-doctors";
 import DoctorsSkeleton from "./_suspense/doctors-skeleton";
 import DoctorsSidebarFilter from "./_section/doctors-sidebar-filter";
+import AvailableToday from "./_section/available-today";
+import AvailableTodaySkeleton from "./_suspense/available-today-skeleton";
 import type { IPageProps } from "@/types";
 
 export default function DoctorsPage({
@@ -9,8 +11,13 @@ export default function DoctorsPage({
   searchParams,
 }: IPageProps<null>) {
   return (
-    <section className="bg-muted/10 min-h-screen pt-10 pb-16">
+    <section className="bg-muted/10">
       <div className="section">
+        {/* Available Today Carousel */}
+        <Suspense fallback={<AvailableTodaySkeleton />}>
+          <AvailableToday />
+        </Suspense>
+
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Left Sidebar Filter */}
           <div className="w-full shrink-0 lg:w-70 lg:sticky lg:top-24 lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto scrollbar-hide">
