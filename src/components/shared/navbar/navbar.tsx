@@ -23,14 +23,14 @@ const navLinks = [
 export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-      <div className="section py-3 flex h-16 items-center justify-between">
+      <div className="section py-3 flex h-16 items-center justify-between relative">
         {/* Left: Logo */}
         <div className="flex items-center">
           <Logo show={true} />
         </div>
 
         {/* Center: Desktop Links */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => (
             <Link
               key={link.name}
