@@ -5,6 +5,7 @@ import { fetchDoctors } from "../_action/doctor.action";
 import ErrorState from "@/components/common/error-state";
 import EmptyState from "@/components/common/empty-state";
 import { DoctorCard } from "@/components/common/doctor-card";
+import DoctorFilter from "@/components/common/doctor-filter";
 
 export default async function Doctors() {
   const doctorsData = await fetchDoctors({ limit: 4 });
@@ -38,6 +39,8 @@ export default async function Doctors() {
             </Link>
           </Button>
         </div>
+
+        <DoctorFilter />
 
         {!doctorsData.success ? (
           <ErrorState message={doctorsData.message} />

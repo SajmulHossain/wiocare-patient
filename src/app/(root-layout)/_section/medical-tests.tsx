@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { RiArrowRightLine } from "@remixicon/react";
 import Link from "next/link";
 import DiagnosisCard from "@/components/common/diagnosis-card";
+import DiagnosisCategories from "@/components/common/diagnosis-categories";
 import { MEDICAL_TESTS_DATA } from "../_constant/medical-tests";
 
 export default function MedicalTests() {
@@ -31,6 +32,8 @@ export default function MedicalTests() {
             </Link>
           </Button>
         </div>
+
+        <DiagnosisCategories />
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {MEDICAL_TESTS_DATA.map((test, idx) => (

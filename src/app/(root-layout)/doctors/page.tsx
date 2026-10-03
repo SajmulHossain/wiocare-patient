@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import AllDoctors from "./_section/all-doctors";
 import DoctorsSkeleton from "./_suspense/doctors-skeleton";
+import DoctorFilter from "@/components/common/doctor-filter";
 import type { IPageProps } from "@/types";
 
 export default function DoctorsPage({
@@ -19,6 +20,14 @@ export default function DoctorsPage({
             personalized care.
           </p>
         </div>
+
+        <Suspense
+          fallback={
+            <div className="mx-auto mb-10 h-16 w-full max-w-4xl animate-pulse rounded-full bg-background border border-border shadow-sm"></div>
+          }
+        >
+          <DoctorFilter />
+        </Suspense>
 
         <Suspense fallback={<DoctorsSkeleton />}>
           <AllDoctors params={params} searchParams={searchParams} />

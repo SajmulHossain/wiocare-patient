@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import AllDiagnosis from "./_section/all-diagnosis";
 import DiagnosisSkeleton from "./_suspense/diagnosis-skeleton";
 import DiagnosisFilter from "./_components/diagnosis-filter";
+import DiagnosisCategories from "@/components/common/diagnosis-categories";
 import type { IPageProps } from "@/types";
 
 export default function DiagnosisPage({
@@ -28,6 +29,7 @@ export default function DiagnosisPage({
           }
         >
           <DiagnosisFilter />
+          <DiagnosisCategories />
         </Suspense>
 
         <Suspense fallback={<DiagnosisSkeleton />}>
