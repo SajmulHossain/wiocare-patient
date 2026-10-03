@@ -16,7 +16,7 @@ export default async function AvailableToday() {
   if (!doctors.length) return null;
 
   return (
-    <div className="mb-8 rounded-3xl bg-[#eef9fb] p-5 md:p-8 dark:bg-[#1a2c32]/50">
+    <div className="mb-8 rounded-3xl bg-primary/10 p-5 md:p-8 dark:bg-[#1a2c32]/50">
       <Carousel
         opts={{
           align: "start",

@@ -11,7 +11,7 @@ export function AvailableDoctorCard({ doctor }: { doctor: IDoctor }) {
     doctor.designation ||
     "Specialist";
   return (
-    <Card className="flex flex-col gap-3 rounded-2xl bg-card p-3 shadow-sm border-none transition-shadow hover:shadow-md">
+    <Card className="flex flex-col gap-3 rounded-2xl p-3 transition-shadow hover:shadow-md">
       <div className="flex items-center gap-3">
         <Avatar className="h-16 w-16 rounded-xl">
           <AvatarImage
